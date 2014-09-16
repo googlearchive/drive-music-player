@@ -1,0 +1,428 @@
+body,html {
+	text-align: center;
+	overflow-x: hidden;
+	padding-bottom: 15px;
+}
+
+#logo {
+	margin: 20px 0 40px;
+}
+
+#jp_container_1 {
+	border-radius: 20px;
+	margin: auto;
+	overflow: hidden;
+	border-color: #AAA;
+	border-width: 5px;
+}
+
+.jp-gui.jp-interface {
+	border-radius: 15px 15px 0 0;
+}
+
+.jp-type-single {
+	border-radius: 15px;
+	overflow: hidden;
+}
+
+.song {
+	font-size: 14px;
+	background-color: #DDD;
+	cursor: pointer;
+	display: block;
+	text-decoration: none;
+	color: #555;
+	text-align: left;
+	-moz-transition: background-color 0.2s linear;
+	-webkit-transition: background-color 0.2s linear;
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	background-size: 40px 40px;
+}
+
+.song:HOVER {
+	/*background-color: #BBB !important;*/
+}
+
+.song.playing {
+	font-weight: bold;
+}
+.song .moveindicator {
+	width: 15px;
+	padding-right: 0 !important;
+    min-width: 15px;
+    cursor: url("/images/openhand.cur") 7 5, default !important;
+}
+.song:HOVER .moveindicator {
+	background: url("/images/grippy_large.png") no-repeat 1px;
+}
+.song:nth-child(even):HOVER .moveindicator {
+    background: url("/images/grippy_large_dark.png") no-repeat 1px;
+    opacity: 0.8;
+}
+
+.song.add {
+	padding: 15px 0;
+	border-top: none;
+	background-color: #EEE;
+	text-align: center;
+	border-top: 3px #BBB solid;
+	width: 90%;
+	float: left;
+	margin-right: -3px;
+	height: 26px;
+}
+
+.song.add img {
+	height: 25px;
+	padding-right: 15px;
+	margin-bottom: -5px;
+}
+
+.song.add:HOVER, .create.playlist:HOVER {
+	background-color: #BBB;
+}
+.create.playlist {
+    padding: 15px 0;
+    border-top: none;
+    background-color: #EEE;
+    text-align: center;
+    border: #BBB solid;
+    border-width: 3px 0 0 3px;
+    width: 10%;
+    float: right;
+    cursor: pointer;
+    height: 26px;
+}
+.create.playlist img {
+	height: 18px;
+}
+
+.header .artist {
+	padding-left: 17px;
+}
+
+.artist {
+	color: #777;
+	width: 150px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 150px;
+	min-width: 150px;
+	white-space: nowrap;
+	padding: 7px 20px 7px 0;
+}
+
+.title {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	max-width: 238px;
+	min-width: 238px;
+	width: 238px;
+	padding: 7px 20px 7px 0;
+}
+
+.header {
+	font-size: 14px;
+	display: block;
+	text-align: left;
+	border-top: #BBB 3px solid;
+	padding-top: 3px;
+	font-style: italic;
+	background-color: #ccc;
+	height: 26px;
+}
+
+.header td {
+	line-height: 10px;
+}
+
+.playindicator {
+	width: 19px;
+	min-width: 19px;
+	max-width: 19px;
+	height: 19px;
+}
+
+.song.playing .playindicator {
+	background-color: #eee;
+	background-image: url('/images/speaker.png');
+	background-position: 8px 8px;
+	background-size: 23px 20px;
+	background-repeat: no-repeat;
+	opacity: 0.85;
+}
+
+.remove {
+	padding-right: 7px !important;
+	font-weight: bold;
+	background-color: #ccc;
+	font-size: 16px;
+	opacity: 0;
+	display:none;
+	-moz-transition: opacity 0.2s linear;
+	-webkit-transition: opacity 0.2s linear;
+	cursor: pointer;
+	width: 17px;
+	max-width: 17px;
+	min-width: 17px;
+	padding-left: 14px;
+}
+
+#empty {
+	font-style: italic;
+	font-size: 12px;
+	text-align: left;
+	background-color: #DDD !important;
+}
+
+#empty td {
+	padding: 10px 50px 0 50px;
+	line-height: 16px;
+}
+
+#empty span {
+	vertical-align: top;
+}
+
+#empty td img {
+	margin-left: 5px;
+	margin-bottom: -22px;
+	opacity: 0.8;
+}
+
+.song:HOVER .remove {
+	opacity: 1;
+	display: table-cell;
+}
+
+.remove:HOVER {
+	background-color: rgb(255, 200, 104);
+}
+
+#playListControl .remove {
+	height: 29px;
+	display: inline-block;
+	padding-left: 10px;
+	padding-right: 5px !important;
+	border-radius: 5px;
+	float: right;
+	margin-right: 5px;
+	margin-top: 2px;
+}
+
+#fileContainer {
+	width: 100%;
+	border-spacing: 0;
+}
+
+#fileContainer td {
+	padding-right: 20px;
+}
+
+#fileContainer tbody tr:nth-child(odd) {
+	background-color: transparent;
+}
+
+#subtitle {
+	position: relative;
+	top: -40px;
+	left: 120px;
+	font-family: sans-serif, "Arial";
+	color: #444;
+	letter-spacing: 1px;
+}
+
+.error {
+	font-weight: normal !important;
+	font-style: italic;
+	font-size: 12px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 407px;
+	min-width: 407px;
+	max-width: 407px;
+	height: 22px;
+}
+
+#hider {
+	position: absolute;
+	top: 0;
+	width: 100%;
+	background-color: white;
+	z-index: 1000;
+	height: 100%;
+	font-family: sans-serif;
+	font-size: 16px;
+}
+#hider div {
+	margin-top: 70px;
+}
+
+#hiderTrans {
+	display: none;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background-color: black;
+    opacity:0.4;
+    z-index: 1000;
+    height: 100%;
+    font-family: sans-serif;
+    font-size: 16px;
+}
+#hiderTrans div {
+    margin-top: 70px;
+}
+
+.noID3tags {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 407px;
+	min-width: 407px;
+	max-width: 407px;
+}
+#flashAlert {
+	display: none;
+	font-family: sans-serif;
+	position: absolute;
+    background-color: rgb(100,100,100);
+    background-color: rgba(0,0,0,0.6);
+    color: #E33;
+    z-index: 3000;
+    width: 100%;
+    left:0;
+    top:0;
+    height: 100%;
+    font-size: 25px;
+}
+#flashAlert div {
+	margin: 165px auto;
+	background-color: white;
+	padding: 20px;
+	border-radius: 10px;
+	width: 920px;
+}
+#issueRepport {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	border: #AAA solid;
+	border-width: 2px 0 0 2px;
+	background-color: #EEE;
+	font-size: 12px;
+	padding: 5px 7px;
+	color: #666;
+	border-top-left-radius: 5px;
+	font-family: sans-serif;
+	cursor: pointer;
+}
+#issueRepport:HOVER {
+	background-color: #BBB;
+}
+#issueRepport a {
+	color: #666;
+	text-decoration: none;
+    font-family: sans-serif;
+}
+/* Tooltips */
+
+/* Styling for tooltips */
+
+.ui-tooltip, .arrow:after {
+   background: #444;
+   border: 1px solid white !important;
+}
+.ui-tooltip {
+  padding: 5px 10px;
+  color: white;
+  border-radius: 5px;
+  font: 12px "Helvetica Neue", Sans-Serif;
+}
+.arrow {
+  width: 35px;
+  height: 8px;
+  overflow: hidden;
+  position: absolute;
+  left: 50%;
+  margin-left: -17px;
+  bottom: -8px;
+}
+.arrow.top {
+  top: -8px;
+  bottom: auto;
+}
+.arrow.left {
+  left: 75%;
+}
+.arrow.right {
+  left: 25%;
+}
+.arrow:after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: -10px;
+  width: 12px;
+  height: 12px;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  tranform: rotate(45deg);
+}
+.arrow.top:after {
+  bottom: -10px;
+  top: auto;
+ }
+ #playListControl {
+   background-color: #bbb;
+   border-top: #bbb 0px solid;
+   height: 0;
+   overflow: hidden;
+   transition: height 1s, border-top-width 1s;
+   -webkit-transition: height border-top-width 1s, border-top-width 1s;
+   -moz-transition: height border-top-width 1s, border-top-width 1s;
+   text-align: left;
+   padding-left: 12px;
+   font-size: 18px;
+   
+ }
+ 
+ #playListControl.show{
+   border-top-width: 3px;
+   height: 33px;
+ }
+ #playListControl img {
+   height: 20px;
+   margin-right: 13px;
+   margin-top: 6px;
+   float: left;
+   opacity: 0.7;
+ }
+ #playlistNameContainer {
+   float: left;
+   padding: 2px 10px 1px 10px;
+   margin-top: 3px;
+   background-color: transparent;
+   border-color: transparent;
+   font-size: 18px;
+   border-width: 0;
+   height: 24px;
+   color: #444;
+   overflow: hidden;
+   text-overflow: ellipsis;
+ }
+#playlistNameContainer:focus, #playlistNameContainer:HOVER {
+   background-color: #ddd;
+   border-radius: 2px;
+ }
+#playlistNameContainer:disabled, #playlistNameContainer:disabled:HOVER {
+  background-color: transparent;
+}
+.jp-toggles {
+	display: inline-block;
+}

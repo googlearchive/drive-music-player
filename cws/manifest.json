@@ -1,0 +1,16 @@
+{
+  "name" : "Music Player for Google Drive",
+  "version" : "1.4",
+  "manifest_version": 2,
+  "description" : "Music and Audio files player for Google Drive.",
+  "container" : "GOOGLE_DRIVE",
+  "api_console_project_id" : "543871781652",
+  "icons": {
+    "128": "icon_128.png"
+  },
+  "app" : {
+    "launch" : {
+      "web_url" : "http://www.driveplayer.com/"
+    }
+  }
+}

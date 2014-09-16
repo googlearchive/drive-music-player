@@ -1,0 +1,6 @@
+This folder contains all the JS source code files.
+
+The project's custom code is in the files named dmp.*.js
+The project uses json2.js from Crockford which is a JSON parser implementation that is loaded for IE < 8
+id*.js files are an implementation of an ID3 tags parser from Jacob Seidelin (for ID3v1) and Ant�nio Afonso (for ID3v2) and myself as I re-wrote the AAC tag parser I also modified these to use jquery and jdataview instead of binaryajax which was lacking CORS support.
+The project uses Jplayer as the audio player engine`.
