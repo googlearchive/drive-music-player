@@ -7,11 +7,11 @@ It's available [in the Chrome Web Store](https://chrome.google.com/webstore/deta
 
 It looks like this:
 
-![Music Player for Google Drive](http://drive-music-player.googlecode.com/git/cws/screenshot_small_1.png)
+![Music Player for Google Drive](https://github.com/nicolasgarnier/drive-music-player/raw/master/cws/screenshot_small_1.png)
 
 It features open-with functionality from Google Drive:
 
-![Open-with from Google Drive](http://drive-music-player.googlecode.com/git/cws/screenshot_small_2.png)
+![Open-with from Google Drive](https://github.com/nicolasgarnier/drive-music-player/raw/master/cws/screenshot_small_2.png)
 
 As well as the following features:
 
