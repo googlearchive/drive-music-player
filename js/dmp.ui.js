@@ -32,7 +32,7 @@ dmp.ui.createSongEntries = function() {
 /**
  * Re-orders the list of Songs from the DOM elements inside the
  * @code{#fileContainer} table after a drag and drop.
- * 
+ *
  * @param{Event} event The event from jQuery UI Sortable event.
  * @param{Object} ui An object containing the sorted element.
  */
@@ -70,7 +70,7 @@ $.fn.equals = function(compareTo) {
 
 /**
  * Creates a new File Entry in the playlist.
- * 
+ *
  * @param{Object} fileInfo The Info on the file (such as ID or tags) to create a UI entry for.
  */
 dmp.ui.createSongEntry = function(fileInfo) {
@@ -101,7 +101,7 @@ dmp.ui.createSongEntry = function(fileInfo) {
   });
   entryContainer.append(playindicatorContainer).append(moveindicator).append(artistContainer).append(titleContainer).append(removeButton);
   $('#fileContainer tbody').append(entryContainer);
-  
+
   // Start fetching the file's URL and title so we can extract ID3 tags.
   dmp.drive.getFileUrl(fileInfo.id, function(fileUrl, fileName, error, fileExtension, isFolder, thumbnailUrl, md5, isPlaylist){
     // If the file is a folder and not a song.
@@ -118,7 +118,7 @@ dmp.ui.createSongEntry = function(fileInfo) {
       dmp.playlist.loadPlaylist(fileInfo);
       dmp.url.makePrettyUrl();
       dmp.ui.toggleEmptyPlaylist();
-    } 
+    }
     else {
       if (error && error.code == 404) {
         $(".artist", $("#file-" + fileInfo.id))
@@ -178,9 +178,10 @@ dmp.ui.buildPicker = function() {
   // Open Playlist in Drive View.
   var view4 = new google.picker.DocsView();
   view4.setLabel("📄\u00A0Open\u00A0a\u00A0Playlist");
+  view4.setIncludeFolders(false);
   view4.setMimeTypes(dmp.playlist.PLAYLIST_MIME_TYPE + "." + dmp.auth.APPLICATION_ID);
 
-  
+
   var newPickerBuilder = new google.picker.PickerBuilder();
 
   // If user opened from a folder, display it.
@@ -192,7 +193,7 @@ dmp.ui.buildPicker = function() {
     customFolderView.setMimeTypes(supportedMimeType);
     newPickerBuilder.addView(customFolderView);
   }
-  
+
   var newPicker = newPickerBuilder.enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
     .setAppId(dmp.auth.APPLICATION_ID)
     .setOAuthToken(dmp.auth.accessToken)
@@ -251,7 +252,7 @@ dmp.ui.toggleEmptyPlaylist = function() {
 /**
  * Fetches and displays the ID3 tags for the given song. Also tries to
  * subsequently fetch the album cover using the LastFm API.
- * 
+ *
  * @param{String} fileId The ID of the file.
  * @param{String} fileUrl The URL where the file content is.
  * @param{String} fileName The name of the file.
@@ -261,7 +262,7 @@ dmp.ui.toggleEmptyPlaylist = function() {
 dmp.ui.extractID3Tags = function(fileId, fileUrl, fileName, md5, thumbnailLink) {
   console.log("Trying to look at ID3 tags for: " + fileName);
   ID3.loadTags(fileUrl, function(){
-      var tags = ID3.getAllTags(fileUrl); 
+      var tags = ID3.getAllTags(fileUrl);
       if(tags && tags.artist && tags.title) {
         dmp.playlist.addMetadataToSong(fileId, tags.title, tags.artist, md5);
         dmp.drive.saveTagsInProperty(fileId, tags.title, tags.artist, md5);
@@ -288,7 +289,7 @@ dmp.ui.extractID3Tags = function(fileId, fileUrl, fileName, md5, thumbnailLink) 
 /**
  * Fetches and displays the ID3 tags for the given song. Also tries to
  * subsequently fetch the album cover using the LastFm API.
- * 
+ *
  * @param{String} fileId The ID of the file.
  * @param{String} title Title of the song.
  * @param{String} artist Artist of the song.
@@ -339,7 +340,7 @@ dmp.ui.repeatToggle = function(e) {
 
 /**
  * Displays a message if the user does not have flash installed.
- * 
+ *
  * @returns{boolean} True if the browser has flash installed.
  */
 dmp.ui.detectFlash = function() {
