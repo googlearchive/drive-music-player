@@ -164,13 +164,16 @@ dmp.ui.buildPicker = function() {
   var view = new google.picker.DocsView();
   view.setLabel("🔍\u00A0Search\u00A0Audio\u00A0Files");
   view.setMimeTypes(supportedMimeType);
+  view.setMode(google.picker.DocsViewMode.LIST);
 
   // Picker allowing users to browse folders.
   var view2 = new google.picker.DocsView();
   view2.setLabel("📂\u00A0My\u00A0Drive");
   view2.setIncludeFolders(true);
+  view2.setSelectFolderEnabled(true);
   view2.setParent("root");
   view2.setMimeTypes(supportedMimeType);
+  view2.setMode(google.picker.DocsViewMode.LIST);
 
   // Recently selected items view.
   var view3 = new google.picker.View(google.picker.ViewId.RECENTLY_PICKED);
@@ -181,6 +184,7 @@ dmp.ui.buildPicker = function() {
   view4.setLabel("📄\u00A0Open\u00A0a\u00A0Playlist");
   view4.setIncludeFolders(false);
   view4.setMimeTypes(dmp.playlist.PLAYLIST_MIME_TYPE + "." + dmp.auth.APPLICATION_ID);
+  view4.setMode(google.picker.DocsViewMode.LIST);
 
 
   var newPickerBuilder = dmp.useSandbox ? new google.picker.PickerBuilder("https://docs.sandbox.google.com/picker")
@@ -191,8 +195,10 @@ dmp.ui.buildPicker = function() {
     var customFolderView = new google.picker.DocsView();
     customFolderView.setLabel? customFolderView.setLabel("📂\u00A0" + dmp.folderLabel.replace(/ /g, "\u00A0")) : (customFolderView.Wd ? customFolderView.Wd("📂\u00A0" + dmp.folderLabel.replace(/ /g, "\u00A0")) : null);
     customFolderView.setIncludeFolders(true);
+    customFolderView.setSelectFolderEnabled(true);
     customFolderView.setParent(dmp.folderId);
     customFolderView.setMimeTypes(supportedMimeType);
+    customFolderView.setMode(google.picker.DocsViewMode.LIST);
     newPickerBuilder.addView(customFolderView);
   }
 
