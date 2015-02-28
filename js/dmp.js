@@ -3,6 +3,9 @@
 // Namespace initialization.
 var dmp = dmp || {};
 
+/** If sandbox should be used. */
+dmp.useSandbox = true;
+
 /** The IDs of the Files opened in the playlist. */
 dmp.fileIds = [];
 
@@ -45,5 +48,8 @@ dmp.init = function() {
 };
 
 function init() {
+  if (dmp.useSandbox) {
+    gapi.config.update('googleapis.config/root', 'https://content-googleapis-test.sandbox.google.com');
+  }
   gapi.load('picker', {'callback': dmp.init});
 }
