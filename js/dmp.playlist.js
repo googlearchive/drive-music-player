@@ -232,3 +232,19 @@ dmp.playlist.addMetadataToSong = function(songId, title, artist, md5) {
     dmp.playlist.audioList[songIndex] = song;
   }
 };
+
+dmp.playlist.loadFolder = function(folderId) {
+  dmp.drive.listFiles(folderId, function(items, err) {
+    if (err != null) {
+      console.log("error:", err);
+      return;
+    }
+    for (var i = 0; i < items.length; i++) {
+      var item = items[i];
+      console.log("Folder item:", item);
+      dmp.playlist.audioList.push({id: item.id});
+      dmp.ui.createSongEntry({id: item.id});
+      dmp.ui.toggleEmptyPlaylist();
+    }
+  });
+};
