@@ -182,7 +182,8 @@ dmp.ui.buildPicker = function() {
   view4.setMimeTypes(dmp.playlist.PLAYLIST_MIME_TYPE + "." + dmp.auth.APPLICATION_ID);
 
 
-  var newPickerBuilder = new google.picker.PickerBuilder();
+  var newPickerBuilder = dmp.useSandbox ? new google.picker.PickerBuilder("https://docs.sandbox.google.com/picker")
+      : new google.picker.PickerBuilder();
 
   // If user opened from a folder, display it.
   if (dmp.folderId) {
