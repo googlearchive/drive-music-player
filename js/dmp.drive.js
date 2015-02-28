@@ -8,6 +8,58 @@ dmp.drive = dmp.drive || {};
 dmp.drive.FOLDER_MIME_TYPE = "application/vnd.google-apps.folder";
 
 /**
+ * Lists the children of the given folder. Then calls the callback.
+ *
+ * @param{String} folderId The ID of the folder to list.
+ * @param{function} callback The callback function that will be called
+ *    when the folder has been listed. This function should have 1
+ *    parameter which will be an array of file IDs. The second argument
+ *    is an error object, which will be non-null if something goes wrong.
+ * @param{int} retryCounter OPTIONAL. Number of times this function call has
+ *    been retried previously call.
+ */
+dmp.drive.listFiles = function(folderId, callback, retryCounter) {
+  gapi.client.load('drive', 'v2', function() {
+    var accessTokenObj = new Object();
+    accessTokenObj.access_token = dmp.auth.accessToken;
+    accessTokenObj.token_type = "Bearer";
+    accessTokenObj.expires_in = "3600";
+    gapi.auth.setToken(accessTokenObj);
+    gapi.client.drive.files.list({'q': "'"+folderId+"' in parents and trashed=false",'fields':'items(id)'}).execute(function(resp){
+      // We got an error object back so we can check it out.
+      if (resp && resp.error) {
+        console.log("Error while listing files: "
+            + resp.error.message);
+        // If the issue is that auth has expired we refresh and retry.
+        if (resp.error.code == 401
+            && resp.error.data[0].reason == "authError"
+            && (retryCounter ? retryCounter == 0 : true)) {
+          dmp.auth.autoRefreshAuth(function() {
+            dmp.drive.listFiles(folderId, callback, 1);
+          });
+        // For any other errors we retry once.
+        } else if (!retryCounter || retryCounter == 0) {
+          dmp.drive.listFiles(folderId, callback, 1);
+        // For any other errors and we already retried we call the callback.
+        } else {
+          callback(null, resp.error);
+        }
+      // We have a good response
+      } else if (resp && resp.items) {
+        console.log("Got items:", resp.items);
+        callback(resp.items, null);
+      // The return object has no title, maybe it's an error so we retry.
+      } else if (!retryCounter || retryCounter == 0){
+        dmp.drive.listFiles(folderId, callback, 1);
+      // We already retried so we simply call the callback with an error.
+      } else {
+        callback(null, {'message': 'Failed to list children of ' + folderId + ', already retried'});
+      }
+    });
+  });
+};
+
+/**
  * Fetches the URL of the file of the given File Id. Then calls the
  * callback.
  *
