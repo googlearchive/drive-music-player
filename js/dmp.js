@@ -45,5 +45,5 @@ dmp.init = function() {
 };
 
 function init() {
-  google.load('picker', '1', {callback: dmp.init});
+  gapi.load('picker', {'callback': dmp.init});
 }
