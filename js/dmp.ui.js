@@ -111,9 +111,10 @@ dmp.ui.createSongEntry = function(fileInfo) {
       dmp.folderId = fileInfo.id;
       dmp.folderLabel = fileName;
       dmp.url.makePrettyUrl();
+      // Update picker to reflect the new folder, but don't show it.
       dmp.ui.buildPicker(true);
-      dmp.ui.picker.setVisible(true);
       dmp.ui.toggleEmptyPlaylist();
+      dmp.playlist.loadFolder(fileInfo.id);
     } else if (isPlaylist) {
       dmp.playlist.loadPlaylist(fileInfo);
       dmp.url.makePrettyUrl();
