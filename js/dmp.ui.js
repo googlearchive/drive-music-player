@@ -114,7 +114,11 @@ dmp.ui.createSongEntry = function(fileInfo) {
       // Update picker to reflect the new folder, but don't show it.
       dmp.ui.buildPicker(true);
       dmp.ui.toggleEmptyPlaylist();
-      dmp.playlist.loadFolder(fileInfo.id);
+      if (dmp.testUser) {
+        dmp.playlist.loadFolder(fileInfo.id);
+      } else {
+        dmp.ui.picker.setVisible(true);
+      }
     } else if (isPlaylist) {
       dmp.playlist.loadPlaylist(fileInfo);
       dmp.url.makePrettyUrl();
@@ -170,7 +174,7 @@ dmp.ui.buildPicker = function() {
   var view2 = new google.picker.DocsView();
   view2.setLabel("📂\u00A0My\u00A0Drive");
   view2.setIncludeFolders(true);
-  view2.setSelectFolderEnabled(true);
+  //view2.setSelectFolderEnabled(true);
   view2.setParent("root");
   view2.setMimeTypes(supportedMimeType);
   view2.setMode(google.picker.DocsViewMode.LIST);
@@ -195,7 +199,7 @@ dmp.ui.buildPicker = function() {
     var customFolderView = new google.picker.DocsView();
     customFolderView.setLabel? customFolderView.setLabel("📂\u00A0" + dmp.folderLabel.replace(/ /g, "\u00A0")) : (customFolderView.Wd ? customFolderView.Wd("📂\u00A0" + dmp.folderLabel.replace(/ /g, "\u00A0")) : null);
     customFolderView.setIncludeFolders(true);
-    customFolderView.setSelectFolderEnabled(true);
+    //customFolderView.setSelectFolderEnabled(true);
     customFolderView.setParent(dmp.folderId);
     customFolderView.setMimeTypes(supportedMimeType);
     customFolderView.setMode(google.picker.DocsViewMode.LIST);

@@ -122,6 +122,45 @@ dmp.drive.getFileUrl = function(fileId, callback, retryCounter) {
   });
 };
 
+dmp.drive.aboutGet = function(callback, retryCounter) {
+  gapi.client.load('drive', 'v2', function() {
+    var accessTokenObj = new Object();
+    accessTokenObj.access_token = dmp.auth.accessToken;
+    accessTokenObj.token_type = "Bearer";
+    accessTokenObj.expires_in = "3600";
+    gapi.auth.setToken(accessTokenObj);
+    gapi.client.drive.about.get({'fields': "user/emailAddress"}).execute(function(resp){
+      // We got an error object back so we can check it out.
+      if (resp && resp.error) {
+        console.log("Error while fetching about: " + resp.error.message);
+        // If the issue is that auth has expired we refresh and retry.
+        if (resp.error.code == 401
+            && resp.error.data[0].reason == "authError"
+            && (retryCounter ? retryCounter == 0 : true)) {
+          dmp.auth.autoRefreshAuth(function() {
+            dmp.drive.aboutGet(callback, 1);
+          });
+        // For any other errors we retry once.
+        } else if (!retryCounter || retryCounter == 0) {
+          dmp.drive.aboutGet(callback, 1);
+        // For any other errors and we already retried we call the callback.
+        } else {
+          callback(null, resp.error);
+        }
+      // We have a good response
+      } else if (resp && resp.user) {
+        console.log("Got user: " + resp.user);
+        callback(resp.user, null);
+      // The return object has no user, maybe it's an error so we retry.
+      } else if (!retryCounter || retryCounter == 0){
+        dmp.drive.aboutGet(callback, 1);
+      // We already retried so we simply call the callback with an error.
+      } else {
+        callback(null, {});
+      }
+    });
+  });
+};
 
 // WILL NOT WORK IF CROSS ORIGIN IS NOT ENABLED ON THE UMAGE URL.
 dmp.drive.uploadThumbnailFromUrl = function(fileId, albumUrl) {
