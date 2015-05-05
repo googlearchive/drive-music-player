@@ -4,7 +4,7 @@
 var dmp = dmp || {};
 
 /** If sandbox should be used. */
-dmp.useSandbox = true;
+dmp.useSandbox = false;
 
 /** The IDs of the Files opened in the playlist. */
 dmp.fileIds = [];
