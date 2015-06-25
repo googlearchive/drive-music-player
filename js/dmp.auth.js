@@ -98,17 +98,19 @@ dmp.auth.periodicCheckAuth = function(callback) {
     console.log("Found an access token: " + dmp.auth.accessToken);
     // Start the autorefresh chron job. Check every 60sec if the token is valid.
     window.setInterval(dmp.auth.conditionalRefreshAuth, 60000);
-    // Calling the callback.
-    if (callback) {
+    dmp.auth.userId =dmp.url.getUserIdFromStateParam();
+    if(dmp.auth.userId == null) {
+      dmp.auth.fetchUserId(callback);
+    } else if (callback) {
       callback();
     }
   } else {
-    // Checking again every 1s because in some cases Chrome will not
+    // Checking again every 0.1s because in some cases Chrome will not
     // reload the page but will only change the hash.
     console.log("Checking auth again...");
     window.setTimeout(function() {
         dmp.auth.periodicCheckAuth(callback);
-      }, 1000);
+      }, 100);
   }
 };
 
@@ -210,7 +212,7 @@ dmp.auth.createOAuthClientFlowUrl = function(clientId, scopes, userId, state) {
   var reloadSuffix = '';
   // Setting a reload suffix only for browsers that support URL re-write (The reload bug being in Chrome we are covered).
   if (window.history && window.history.replaceState) {
-    reloadSuffix = '?a';
+    //reloadSuffix = '?a'; // doesn't seem to be happening anymore so we're disabling that for now...
   }
   return "https://accounts.google.com/o/oauth2/auth?"
       + "redirect_uri=" + encodeURIComponent(location.protocol + '//'

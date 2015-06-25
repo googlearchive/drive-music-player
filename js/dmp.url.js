@@ -14,7 +14,7 @@ dmp.url.getUrlParameter = function(name) {
   var param = (RegExp(name + '=' + '(.+?)(&|$)').exec(params)||[,null])[1];
   return (param ? decodeURIComponent(param) : param);
 };
- 
+
 /**
  * Returns the value of the given Hash parameter.
  *
@@ -28,8 +28,8 @@ dmp.url.getHashParameter = function(name) {
 };
 
 /**
- * Extracts the File IDs from the State parameter and saves them locally.
- * 
+ * Extracts the File IDs from the State parameter.
+ *
  * @return{Array<String>} The File IDs extracted from the state Hash parameter.
  */
 dmp.url.getFileIdsFromStateParam = function() {
@@ -41,6 +41,22 @@ dmp.url.getFileIdsFromStateParam = function() {
     console.log("Extracted the file IDs: " + []);
     return [];
   }
+};
+
+/**
+ * Extracts the User ID from the State parameter.
+ *
+ * @return{String} The User ID extracted from the state Hash parameter.
+ */
+dmp.url.getUserIdFromStateParam = function() {
+    var stateParamObj = dmp.url.stringToObject(dmp.url.getHashParameter("state"));
+    if (stateParamObj && stateParamObj.userId) {
+        console.log("Extracted the User ID: " + stateParamObj.userId);
+        return stateParamObj.userId;
+    } else {
+        console.log("No user ID found.");
+        return null;
+    }
 };
 
 /**
