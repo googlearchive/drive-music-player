@@ -83,11 +83,16 @@ dmp.player.playNext = function(e, fromError) {
       && $(".jp-repeat-off").is(":visible")
       && (e && e.type != "keydown");
 
-  // If we are not looping on the same song we find the next song's ID or if the event is from a keydown.
-  if (!($(".jp-repeat-one").is(":visible")) || (e && e.type == "keydown")) {
-    if ((e && e.type != "keydown") && $(".jp-shuffle").is(":visible")) {
+  // If we are not looping on the same song we find the next song's ID
+  // If the event is from a keydown we force next song even if looping.
+  if ((!($(".jp-repeat-one").is(":visible")) || (e && e.type == "keydown")) && dmp.playlist.getAudioList().length > 1) {
+    if ($(".jp-shuffle").is(":visible")) {
       // In the case of shuffle (but not when using arrows to browse) we choose a random song.
-      playingIndex = Math.floor(Math.random()*dmp.playlist.getAudioList().length);
+      var nextRandomPlayingIndex = Math.floor(Math.random() * dmp.playlist.getAudioList().length);
+      while (playingIndex === nextRandomPlayingIndex) {
+        nextRandomPlayingIndex = Math.floor(Math.random() * dmp.playlist.getAudioList().length);
+      }
+      playingIndex = nextRandomPlayingIndex;
     } else {
       // We take the next song's ID or we go back to the start of the list.
       playingIndex = playingIndex == dmp.playlist.getAudioList().length - 1 ?
