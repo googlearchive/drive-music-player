@@ -2,27 +2,64 @@ body,html {
 	text-align: center;
 	overflow-x: hidden;
 	padding-bottom: 15px;
+    margin: 0;
+    background-color: #e0e0e0;
 }
 
-#logo {
-	margin: 20px 0 40px;
+.main-container {
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+    margin: auto;
+    width: 640px;
+}
+
+.logo {
+	background: url('/images/marquee_tile.jpg') no-repeat;
+    background-size: 640px;
+    background-position-y: -40px;
+    width: 100%;
+    height: 180px;
+}
+
+.help {
+    font-family: 'Roboto', sans-serif;
+    color: #aaa;
+    font-weight: 200;
+    font-size: 12px;
+    width: 640px;
+    margin: auto;
+    margin-top: 35px;
+    margin-bottom: 45px;
+    padding: 30px;
+    padding-top: 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.help.highlight {
+    background-color: #FFF3A2;
+}
+.help.highlighted {
+    background-color: #eee;
+    transition: background-color 2s;
+}
+.help .shortcut {
+    display: inline-block;
+}
+.help .small-title {
+    margin-top: 20px;
+    margin-bottom: 7px;
+    font-weight: bold;
+}
+.help .material-icons {
+    font-size: 12px;
 }
 
 #jp_container_1 {
-	border-radius: 20px;
-	margin: auto;
 	overflow: hidden;
-	border-color: #AAA;
-	border-width: 5px;
-}
-
-.jp-gui.jp-interface {
-	border-radius: 15px 15px 0 0;
-}
-
-.jp-type-single {
-	border-radius: 15px;
-	overflow: hidden;
+	border-color: #ccc;
+    box-sizing: border-box;
+    width: 100%;
+    border-top: 0;
 }
 
 .song {
@@ -46,6 +83,7 @@ body,html {
 
 .song.playing {
 	font-weight: bold;
+    background-color: rgb(179, 209, 255) !important;
 }
 .song .moveindicator {
 	width: 15px;
@@ -66,7 +104,7 @@ body,html {
 	border-top: none;
 	background-color: #EEE;
 	text-align: center;
-	border-top: 3px #BBB solid;
+	border-top: 1px #BBB solid;
 	width: 90%;
 	float: left;
 	margin-right: -3px;
@@ -76,7 +114,6 @@ body,html {
 .song.add img {
 	height: 25px;
 	padding-right: 15px;
-	margin-bottom: -5px;
 }
 
 .song.add:HOVER, .create.playlist:HOVER {
@@ -88,7 +125,7 @@ body,html {
     background-color: #EEE;
     text-align: center;
     border: #BBB solid;
-    border-width: 3px 0 0 3px;
+    border-width: 1px 0 0 1px;
     width: 10%;
     float: right;
     cursor: pointer;
@@ -98,17 +135,13 @@ body,html {
 	height: 18px;
 }
 
-.header .artist {
-	padding-left: 17px;
-}
-
 .artist {
 	color: #777;
-	width: 150px;
+    width: 180px;
+    min-width: 180px;
+    max-width: 180px;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	max-width: 150px;
-	min-width: 150px;
 	white-space: nowrap;
 	padding: 7px 20px 7px 0;
 }
@@ -117,9 +150,9 @@ body,html {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	max-width: 238px;
-	min-width: 238px;
-	width: 238px;
+    width: 324px;
+    min-width: 324px;
+    max-width: 324px;
 	padding: 7px 20px 7px 0;
 }
 
@@ -127,7 +160,7 @@ body,html {
 	font-size: 14px;
 	display: block;
 	text-align: left;
-	border-top: #BBB 3px solid;
+	border-top: #BBB 1px solid;
 	padding-top: 3px;
 	font-style: italic;
 	background-color: #ccc;
@@ -136,6 +169,10 @@ body,html {
 
 .header td {
 	line-height: 10px;
+}
+
+#fileContainer tr {
+    background-size: 40px;
 }
 
 .playindicator {
@@ -160,7 +197,6 @@ body,html {
 	background-color: #ccc;
 	font-size: 16px;
 	opacity: 0;
-	display:none;
 	-moz-transition: opacity 0.2s linear;
 	-webkit-transition: opacity 0.2s linear;
 	cursor: pointer;
@@ -303,30 +339,47 @@ body,html {
 	margin: 165px auto;
 	background-color: white;
 	padding: 20px;
-	border-radius: 10px;
 	width: 920px;
 }
-#issueRepport {
+#footer {
 	position: fixed;
-	bottom: 0;
-	right: 0;
-	border: #AAA solid;
-	border-width: 2px 0 0 2px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+    bottom: 0;
+    left: 50%;
+    margin-left: -320px;
+	border: #ccc solid;
+	border-width: 1px 1px 0 1px;
 	background-color: #EEE;
 	font-size: 12px;
-	padding: 5px 7px;
+	padding: 0 7px;
 	color: #666;
-	border-top-left-radius: 5px;
 	font-family: sans-serif;
 	cursor: pointer;
+    width: 640px;
+    height: 37px;
+    box-sizing: border-box;
 }
-#issueRepport:HOVER {
-	background-color: #BBB;
-}
-#issueRepport a {
+#footer span {
+    display: inline-block;
 	color: #666;
 	text-decoration: none;
     font-family: sans-serif;
+    margin: 0 15px;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+#footer span:hover {
+    background-color: #ccc;
+}
+#footer .material-icons {
+    font-size: 14px;
+    top: 2px;
+    position: relative;
+}
+#footer img {
+    height: 14px;
+    opacity: 0.7;
+    margin-top: -2px;
 }
 /* Tooltips */
 
@@ -389,9 +442,9 @@ body,html {
    text-align: left;
    padding-left: 12px;
    font-size: 18px;
-   
+
  }
- 
+
  #playListControl.show{
    border-top-width: 3px;
    height: 33px;
@@ -425,4 +478,21 @@ body,html {
 }
 .jp-toggles {
 	display: inline-block;
+}
+div.jp-interface ul.jp-controls li {
+    margin-right: 10px;
+}
+div.jp-audio div.jp-type-single div.jp-progress,
+div.jp-audio div.jp-type-single div.jp-time-holder {
+    left: 180px;
+}
+div.jp-audio ul.jp-controls {
+    width: 600px;
+}
+div.jp-audio div.jp-type-single a.jp-mute,
+div.jp-audio div.jp-type-single a.jp-unmute {
+    margin-left: 360px;
+}
+div.jp-audio div.jp-volume-bar {
+    left: 530px;
 }

@@ -1,5 +1,5 @@
 application: drive-music-player
-version: 1
+version: with-folder-propagation
 runtime: python27
 api_version: 1
 threadsafe: yes
@@ -12,19 +12,22 @@ handlers:
 - url: /
   static_files: index.html
   upload: index.html
-  
+
 - url: /icon_128\.png
   static_files: cws/icon_128.png
   upload: cws/icon_128.png
-  
+
 - url: /images
   static_dir: images
-  
+
+- url: /cws
+  static_dir: cws
+
 - url: /js
   static_dir: js
-  
+
 - url: /skin
   static_dir: skin
-  
+
 - url: /css
   static_dir: css

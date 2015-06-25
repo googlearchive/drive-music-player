@@ -17,8 +17,12 @@ dmp.drive.FOLDER_MIME_TYPE = "application/vnd.google-apps.folder";
  *    is an error object, which will be non-null if something goes wrong.
  * @param{int} retryCounter OPTIONAL. Number of times this function call has
  *    been retried previously call.
+ * @param{Array<int>} items OPTIONAL. Items from previous folders to concatenate.
  */
-dmp.drive.listFiles = function(folderId, callback, retryCounter) {
+dmp.drive.listFiles = function(folderId, callback, retryCounter, items) {
+  if(!items) {
+    items = [];
+  }
   gapi.client.load('drive', 'v2', function() {
     var accessTokenObj = new Object();
     accessTokenObj.access_token = dmp.auth.accessToken;
@@ -35,11 +39,11 @@ dmp.drive.listFiles = function(folderId, callback, retryCounter) {
             && resp.error.data[0].reason == "authError"
             && (retryCounter ? retryCounter == 0 : true)) {
           dmp.auth.autoRefreshAuth(function() {
-            dmp.drive.listFiles(folderId, callback, 1);
+            dmp.drive.listFiles(folderId, callback, 1, items);
           });
         // For any other errors we retry once.
         } else if (!retryCounter || retryCounter == 0) {
-          dmp.drive.listFiles(folderId, callback, 1);
+          dmp.drive.listFiles(folderId, callback, 1, items);
         // For any other errors and we already retried we call the callback.
         } else {
           callback(null, resp.error);
@@ -47,10 +51,11 @@ dmp.drive.listFiles = function(folderId, callback, retryCounter) {
       // We have a good response
       } else if (resp && resp.items) {
         console.log("Got items:", resp.items);
-        callback(resp.items, null);
-      // The return object has no title, maybe it's an error so we retry.
+        // TODO: also extract files from child folders.
+        callback(items.concat(resp.items), null);
+      // The return object has no items, maybe it's an error so we retry.
       } else if (!retryCounter || retryCounter == 0){
-        dmp.drive.listFiles(folderId, callback, 1);
+        dmp.drive.listFiles(folderId, callback, 1, items);
       // We already retried so we simply call the callback with an error.
       } else {
         callback(null, {'message': 'Failed to list children of ' + folderId + ', already retried'});
@@ -164,7 +169,7 @@ dmp.drive.aboutGet = function(callback, retryCounter) {
 
 // WILL NOT WORK IF CROSS ORIGIN IS NOT ENABLED ON THE UMAGE URL.
 dmp.drive.uploadThumbnailFromUrl = function(fileId, albumUrl) {
-  
+
   // Saving Thumb URL to properties because it can't be saved as base 64 due to XHR issues.
   gapi.client.load('drive', 'v2', function() {
     var accessTokenObj = new Object();
@@ -188,14 +193,14 @@ dmp.drive.uploadThumbnailFromUrl = function(fileId, albumUrl) {
       }
     });
   });
-  
+
   // Trying to save the content of the image in case XHR works one day.
   if (document.images) {
     var img = new Image();
     img.src = albumUrl;
     img.onload = function() {
       try {
-        var base64Pic = getBase64FromImTag(img);  
+        var base64Pic = getBase64FromImTag(img);
         dmp.drive.uploadThumbnail(fileId, 'image/png', base64Pic);
       } catch (e) {}
     };

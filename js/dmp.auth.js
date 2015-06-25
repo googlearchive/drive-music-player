@@ -27,7 +27,7 @@ dmp.auth.accessTokenExpieryTimestamp = undefined;
 /**
  * Initializes the authorization to the API using a client-side flow with
  * redirect URI.
- * 
+ *
  * @param(function) callback The callback function to call once auth is
  *                           successful.
  */
@@ -42,7 +42,7 @@ dmp.auth.initAuth = function(callback) {
     // If no userId was found from the State param we look in the hash param.
     userId = userId ? userId : dmp.url.getHashParameter("userId");
     console.log("Found user ID: " + userId);
-    
+
     // If the user ID was not found it means that the user is not coming
     // from Google Drive so we install the app using the install scope.
     var scopes = dmp.auth.DRIVE_FILE_SCOPE + " " + dmp.auth.OPENID_SCOPE + " "
@@ -83,8 +83,8 @@ dmp.auth.initAuth = function(callback) {
 /**
  * Periodically checks if the user is authorized and if it is we save the new
  * accessToken and query the UserInfo API.
- * 
- * @param(function) callback The callback function to call once auth is
+ *
+ * @param(Function) callback The callback function to call once auth is
  *                           successful.
  */
 dmp.auth.periodicCheckAuth = function(callback) {
@@ -98,19 +98,17 @@ dmp.auth.periodicCheckAuth = function(callback) {
     console.log("Found an access token: " + dmp.auth.accessToken);
     // Start the autorefresh chron job. Check every 60sec if the token is valid.
     window.setInterval(dmp.auth.conditionalRefreshAuth, 60000);
-    // Fetching the User ID for the autoRefreshSchedule to use.
-    dmp.auth.fetchUserId(dmp.url.makePrettyUrl);
     // Calling the callback.
     if (callback) {
       callback();
     }
   } else {
-    // Checking again every 0.1s because in some cases Chrome will not
+    // Checking again every 1s because in some cases Chrome will not
     // reload the page but will only change the hash.
     console.log("Checking auth again...");
     window.setTimeout(function() {
         dmp.auth.periodicCheckAuth(callback);
-      }, 100);
+      }, 1000);
   }
 };
 
@@ -164,7 +162,7 @@ dmp.auth.conditionalRefreshAuth = function() {
 
 /**
  * Refreshes the access token automatically.
- * 
+ *
  * @param{function} callback Optional callback to call when the auth has
  *                  finished. The auth object is passed as a parameter.
  */

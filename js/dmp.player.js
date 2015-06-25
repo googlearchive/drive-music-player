@@ -71,18 +71,18 @@ dmp.player.initPlayer = function(){
 /**
  * Depends on looping settings finds the ID of the next song to play and
  * plays it.
- * 
+ *
  * @param{boolean} fromError true if the last song read resulted in an error and
  *     we immediately skipped it.
  */
 dmp.player.playNext = function(e, fromError) {
   var playingIndex = dmp.playlist.getCurrentSongIndex();
-  
+
   // True if we should stop becasue we are not repeating and we ended the last song of the playlist.
   var shouldStopAtTheEnd = (playingIndex == dmp.playlist.getAudioList().length - 1)
       && $(".jp-repeat-off").is(":visible")
       && (e && e.type != "keydown");
-  
+
   // If we are not looping on the same song we find the next song's ID or if the event is from a keydown.
   if (!($(".jp-repeat-one").is(":visible")) || (e && e.type == "keydown")) {
     if ((e && e.type != "keydown") && $(".jp-shuffle").is(":visible")) {
@@ -104,11 +104,11 @@ dmp.player.playNext = function(e, fromError) {
       return;
     }
   }
-  
+
   if (playingIndex == -1) {
     playingIndex = 0;
   }
-  
+
   var nextSongInfo = dmp.playlist.getAudioList()[playingIndex];
   if (nextSongInfo) {
     console.log("Now playing song: " + nextSongInfo);
@@ -121,14 +121,14 @@ dmp.player.playNext = function(e, fromError) {
 /**
  * Depends on looping settings finds the ID of the next song to play and
  * plays it.
- * 
+ *
  * @param{boolean} fromError true if the last song read resulted in an error and
  *     we immediately skipped it.
  */
 dmp.player.playPrevious = function(e, fromError) {
   var playingIndex = dmp.playlist.getCurrentSongIndex();
   // If we are not looping on the same song we find the next song's ID or if the event is from a keydown.
-  if ($(".jp-repeat").is(":visible") || e.type == "keydown") {
+  if ($(".jp-repeat").is(":visible") || e.type == "keydown" || e.type == "click") {
     // We take the next song's ID or we go back to the start of the list.
     playingIndex = playingIndex == 0 ?
         dmp.playlist.getAudioList().length - 1 : playingIndex - 1;
@@ -186,12 +186,12 @@ dmp.player.playFile = function(songId, stop, tracktime) {
 // Key binding shortcuts
 $(document).keydown(function(e){
   // Right arrow key.
-  if (e.keyCode == 39) { 
+  if (e.keyCode == 39) {
     dmp.player.playNext(e);
     return false;
   }
   // Left arrow key.
-  if (e.keyCode == 37) { 
+  if (e.keyCode == 37) {
     dmp.player.playPrevious(e);
     return false;
   }

@@ -36,11 +36,14 @@ dmp.playlist.PLAYLIST_MIME_TYPE = "application/vnd.google-apps.drive-sdk";
 /** The currently opened Realtime document. */
 dmp.playlist.realtimeDoc = undefined;
 
+/** True if we're creating a ew playlist */
+dmp.playlist.creatingNew = false;
 
 /**
  * Creates a new Playlist file in Drive.
  */
 dmp.playlist.createNewPlaylist = function() {
+  dmp.playlist.creatingNew = true;
   $("#hiderTrans").show();
   gapi.client.load('drive', 'v2', function() {
     gapi.client.drive.files.insert({
@@ -85,7 +88,7 @@ dmp.playlist.handleErrors = function(e) {
  * initializes the Realtime Model for new Playlists.
  */
 dmp.playlist.initializeModel = function(model) {
-  
+
   var audioList = model.createList();
   audioList.pushAll(dmp.playlist.getAudioList());
   model.getRoot().set(dmp.playlist.AUDIO_LIST_FIELD_NAME, audioList);
@@ -108,19 +111,24 @@ dmp.playlist.onPlaylistLoaded = function(doc) {
   dmp.playlist.fileName = doc.getModel().getRoot().get(dmp.playlist.FILE_NAME_FIELD_NAME);
   dmp.playlist.currentSongId = doc.getModel().getRoot().get(dmp.playlist.CURRENT_SONG_ID_FIELD_NAME);
   $("#playlistNameContainer").val(dmp.playlist.fileName.getText());
+  if(dmp.playlist.creatingNew){
+      dmp.playlist.creatingNew = false;
+      $("#playlistNameContainer").focus();
+      $("#playlistNameContainer").get(0).setSelectionRange(0, $("#playlistNameContainer").val().length);
+  } else {
+      //  Make sure the shared realtime file name is up to date.
+      dmp.drive.getFileUrl(dmp.playlist.fileId, function(url, title) {
+          dmp.playlist.fileName.setText(title);
+          $("#playlistNameContainer").val(dmp.playlist.fileName.getText());
+      });
+  }
   dmp.ui.createSongEntries();
   dmp.player.playFile(dmp.playlist.getCurrentSongId());
   $("#playListControl").addClass("show");
   $("#hiderTrans").hide();
   dmp.ui.toggleEmptyPlaylist();
   dmp.url.makePrettyUrl();
-  
-  //  Make sure the shared realtime file name is up to date.
-  dmp.drive.getFileUrl(dmp.playlist.fileId, function(url, title) {
-    dmp.playlist.fileName.setText(title);
-    $("#playlistNameContainer").val(dmp.playlist.fileName.getText());
-  });
-  
+
 };
 
 /**
@@ -137,7 +145,7 @@ dmp.playlist.renamePlaylistFromInput = function() {
     $('#playlistNameContainer').val(resp.title);
     $('#playlistNameContainer').removeAttr('disabled');
     dmp.playlist.fileName.setText(resp.title);
-  });   
+  });
 };
 
 /**
