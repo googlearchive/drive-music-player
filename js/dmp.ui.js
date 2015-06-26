@@ -72,8 +72,9 @@ $.fn.equals = function(compareTo) {
  * Creates a new File Entry in the playlist.
  *
  * @param{Object} fileInfo The Info on the file (such as ID or tags) to create a UI entry for.
+ * @param{Function} callback The callback function to execute once the item has finished loading.
  */
-dmp.ui.createSongEntry = function(fileInfo) {
+dmp.ui.createSongEntry = function(fileInfo, callback) {
   // Create the empty container with loading icon for the file.
   var entryContainer = $("<tr>").attr('id','file-' + fileInfo.id).addClass('song').click(function(){dmp.player.playFile(fileInfo.id);});
   var loadingImg = $('<img>').attr('src', dmp.ui.LOADING_IMAGE_DATA_URI).css("margin-right", "10px");
@@ -106,25 +107,24 @@ dmp.ui.createSongEntry = function(fileInfo) {
   dmp.drive.getFileUrl(fileInfo.id, function(fileUrl, fileName, error, fileExtension, isFolder, thumbnailUrl, md5, isPlaylist){
     // If the file is a folder and not a song.
     if (isFolder) {
-      $("#file-" + fileInfo.id).remove();
-      dmp.playlist.removeSong(fileInfo.id);
-      dmp.folderId = fileInfo.id;
-      dmp.folderLabel = fileName;
-      dmp.url.makePrettyUrl();
-      // Update picker to reflect the new folder, but don't show it.
-      dmp.ui.buildPicker(true);
-      dmp.ui.toggleEmptyPlaylist();
       if (dmp.testUser) {
-        dmp.playlist.loadFolder(fileInfo.id);
+          dmp.playlist.loadFolder(fileInfo.id);
       } else {
-        dmp.ui.picker.setVisible(true);
+          dmp.folderId = fileInfo.id;
+          dmp.folderLabel = fileName;
+          dmp.url.makePrettyUrl();
+          // Update picker to reflect the new folder, but don't show it.
+          dmp.ui.buildPicker(true);
+          dmp.ui.toggleEmptyPlaylist();
+          dmp.playlist.removeSong(fileInfo.id);
+          $("#file-" + fileInfo.id).remove();
+          dmp.ui.picker.setVisible(true);
       }
     } else if (isPlaylist) {
       dmp.playlist.loadPlaylist(fileInfo);
       dmp.url.makePrettyUrl();
       dmp.ui.toggleEmptyPlaylist();
-    }
-    else {
+    } else {
       if (error && error.code == 404) {
         $(".artist", $("#file-" + fileInfo.id))
             .text("You are not authorized to read this file or the file does not exist.")
@@ -152,6 +152,9 @@ dmp.ui.createSongEntry = function(fileInfo) {
         });
       }
     }
+    if(callback) {
+      callback();
+    }
   });
 };
 
@@ -161,23 +164,23 @@ dmp.ui.createSongEntry = function(fileInfo) {
  * The new picker will be accessible at @code{dmp.ui.picker}.
  */
 dmp.ui.buildPicker = function() {
-  // List of supported MIME Types.
-  var supportedMimeType = "audio/mpeg3,audio/x-mpeg-3,video/x-mpeg,audio/mp3,audio/mpeg,audio/mp4,audio/mpg,audio/mp4a-latm,audio/ogg,audio/webm,audio/wav,audio/x-wav,audio/wave";
+    // List of supported MIME Types.
+    var supportedMimeType = "audio/mpeg3,audio/x-mpeg-3,video/x-mpeg,audio/mp3,audio/mpeg,audio/mp4,audio/mpg,audio/mp4a-latm,audio/ogg,audio/webm,audio/wav,audio/x-wav,audio/wave";
 
-  // Search Songs in Drive View.
-  var view = new google.picker.DocsView();
-  view.setLabel("🔍\u00A0Search\u00A0Audio\u00A0Files");
-  view.setMimeTypes(supportedMimeType);
-  view.setMode(google.picker.DocsViewMode.LIST);
+    // Search Songs in Drive View.
+    var view = new google.picker.DocsView();
+    view.setLabel("🔍\u00A0Search\u00A0Audio\u00A0Files");
+    view.setMimeTypes(supportedMimeType);
+    view.setMode(google.picker.DocsViewMode.LIST);
 
-  // Picker allowing users to browse folders.
-  var view2 = new google.picker.DocsView();
-  view2.setLabel("📂\u00A0My\u00A0Drive");
-  view2.setIncludeFolders(true);
-  //view2.setSelectFolderEnabled(true);
-  view2.setParent("root");
-  view2.setMimeTypes(supportedMimeType);
-  view2.setMode(google.picker.DocsViewMode.LIST);
+    // Picker allowing users to browse folders.
+    var view2 = new google.picker.DocsView();
+    view2.setLabel("📂\u00A0My\u00A0Drive");
+    view2.setIncludeFolders(true);
+    view2.setParent("root");
+    view2.setMimeTypes(supportedMimeType);
+    view2.setMode(google.picker.DocsViewMode.LIST);
+    view2.setSelectFolderEnabled(dmp.testUser);
 
   // Recently selected items view.
   var view3 = new google.picker.View(google.picker.ViewId.RECENTLY_PICKED);

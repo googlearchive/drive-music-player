@@ -164,9 +164,11 @@ dmp.player.currentlyLoaded = undefined;
 dmp.player.playFile = function(songId, stop, tracktime) {
   dmp.playlist.setCurrentSongId(songId);
   dmp.drive.getFileUrl(songId,
-      function(fileUrl, fileName, error, fileExtension) {
+      function(fileUrl, fileName, error, fileExtension, isFolder) {
         if (error) {
           dmp.player.playNext(null, true);
+        } else if(isFolder) {
+            // Do nothing as if it is a folder we're likely to be currently loading its children.
         } else {
           $(".playing").removeClass("playing");
           $("#file-" + songId).addClass("playing");

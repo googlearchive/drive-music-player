@@ -17,19 +17,23 @@ dmp.drive.FOLDER_MIME_TYPE = "application/vnd.google-apps.folder";
  *    is an error object, which will be non-null if something goes wrong.
  * @param{int} retryCounter OPTIONAL. Number of times this function call has
  *    been retried previously call.
- * @param{Array<int>} items OPTIONAL. Items from previous folders to concatenate.
+ * @param{Array<String>} items OPTIONAL. Items from previous folders to concatenate.
+ * @param{Array<String>} folders OPTIONAL. ID of further folders to explore.
  */
-dmp.drive.listFiles = function(folderId, callback, retryCounter, items) {
+dmp.drive.listFiles = function(folderId, callback, retryCounter, items, folders) {
   if(!items) {
-    items = [];
+      items = [];
+  }
+  if(!folders) {
+      folders = [];
   }
   gapi.client.load('drive', 'v2', function() {
-    var accessTokenObj = new Object();
+    var accessTokenObj = {};
     accessTokenObj.access_token = dmp.auth.accessToken;
     accessTokenObj.token_type = "Bearer";
     accessTokenObj.expires_in = "3600";
     gapi.auth.setToken(accessTokenObj);
-    gapi.client.drive.files.list({'q': "'"+folderId+"' in parents and trashed=false",'fields':'items(id)'}).execute(function(resp){
+    gapi.client.drive.files.list({'q': "'"+folderId+"' in parents and trashed=false",'fields':'items(id, mimeType)'}).execute(function(resp){
       // We got an error object back so we can check it out.
       if (resp && resp.error) {
         console.log("Error while listing files: "
@@ -39,11 +43,11 @@ dmp.drive.listFiles = function(folderId, callback, retryCounter, items) {
             && resp.error.data[0].reason == "authError"
             && (retryCounter ? retryCounter == 0 : true)) {
           dmp.auth.autoRefreshAuth(function() {
-            dmp.drive.listFiles(folderId, callback, 1, items);
+            dmp.drive.listFiles(folderId, callback, 1, items, folders);
           });
         // For any other errors we retry once.
         } else if (!retryCounter || retryCounter == 0) {
-          dmp.drive.listFiles(folderId, callback, 1, items);
+          dmp.drive.listFiles(folderId, callback, 1, items, folders);
         // For any other errors and we already retried we call the callback.
         } else {
           callback(null, resp.error);
@@ -51,11 +55,23 @@ dmp.drive.listFiles = function(folderId, callback, retryCounter, items) {
       // We have a good response
       } else if (resp && resp.items) {
         console.log("Got items:", resp.items);
-        // TODO: also extract files from child folders.
-        callback(items.concat(resp.items), null);
+        for (var index in resp.items) {
+            var item = resp.items[index];
+            if (item.mimeType === dmp.drive.FOLDER_MIME_TYPE) {
+                folders.push(item.id);
+            } else {
+                items.push(item.id);
+            }
+        }
+        if (folders.length > 0) {
+            folderId = folders.pop();
+            dmp.drive.listFiles(folderId, callback, 0, items, folders);
+        } else {
+            callback(items, null);
+        }
       // The return object has no items, maybe it's an error so we retry.
       } else if (!retryCounter || retryCounter == 0){
-        dmp.drive.listFiles(folderId, callback, 1, items);
+        dmp.drive.listFiles(folderId, callback, 1, items, folders);
       // We already retried so we simply call the callback with an error.
       } else {
         callback(null, {'message': 'Failed to list children of ' + folderId + ', already retried'});

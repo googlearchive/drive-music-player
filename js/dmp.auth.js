@@ -212,7 +212,7 @@ dmp.auth.createOAuthClientFlowUrl = function(clientId, scopes, userId, state) {
   var reloadSuffix = '';
   // Setting a reload suffix only for browsers that support URL re-write (The reload bug being in Chrome we are covered).
   if (window.history && window.history.replaceState) {
-    //reloadSuffix = '?a'; // doesn't seem to be happening anymore so we're disabling that for now...
+    reloadSuffix = '?oauth';
   }
   return "https://accounts.google.com/o/oauth2/auth?"
       + "redirect_uri=" + encodeURIComponent(location.protocol + '//'

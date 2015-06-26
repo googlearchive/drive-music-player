@@ -243,15 +243,33 @@ dmp.playlist.addMetadataToSong = function(songId, title, artist, md5) {
 
 dmp.playlist.loadFolder = function(folderId) {
   dmp.drive.listFiles(folderId, function(items, err) {
+    // Remove the folder in the URL to avoid double loading songs when re-loading.
+    dmp.folderId = undefined;
+    dmp.folderLabel = undefined;
+    dmp.url.makePrettyUrl();
     if (err != null) {
       console.log("error:", err);
       return;
     }
     for (var i = 0; i < items.length; i++) {
-      var item = items[i];
-      console.log("Folder item:", item);
-      dmp.playlist.audioList.push({id: item.id});
-      dmp.ui.createSongEntry({id: item.id});
+      var id = items[i];
+      console.log("Folder item:", id);
+      dmp.playlist.audioList.push({id: id});
+      dmp.ui.createSongEntry({id: id}, function() {
+          dmp.playlist.removeSong(folderId);
+          $("#file-" + folderId).remove();
+          dmp.url.makePrettyUrl();
+          if($("#jqueryPlayerContainer").data("jPlayer").status.waitForPlay) {
+              dmp.player.playNext();
+          }
+      });
+      dmp.ui.toggleEmptyPlaylist();
+      dmp.url.makePrettyUrl();
+    }
+    if(items.length == 0) {
+      dmp.playlist.removeSong(folderId);
+      $("#file-" + folderId).remove();
+      dmp.url.makePrettyUrl();
       dmp.ui.toggleEmptyPlaylist();
     }
   });
