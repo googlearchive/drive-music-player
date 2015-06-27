@@ -7,13 +7,6 @@
       if(window.location.host == "drive-music-player.appspot.com") {
         window.location.host = "www.driveplayer.com";
       }
-      // Hide the address bar on mobile web browsers.
-      window.addEventListener("load",function() {
-          setTimeout(function(){
-              // Hide the address bar!
-              window.scrollTo(0, 1);
-          }, 0);
-      });
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -180,11 +173,13 @@
     </div>
     </div>
     <div class="help" id="help">
-        <div class="small-title">Keyboard shortcuts:</div>
-        <div class="shortcut"><i class="material-icons">&#xE315;</i>: Next song </div>
-        <div class="shortcut"><i class="material-icons">&#xE314;</i>: Previous song </div>
-        <div class="shortcut"><i class="material-icons">&#xE316;</i>/<i class="material-icons">&#xE313;</i>: Volume control</div>
-        <div class="shortcut"><i class="material-icons">&#xE256;</i>: Play/Pause</div>
+        <div class="keyboard">
+            <div class="small-title">Keyboard shortcuts:</div>
+            <div class="shortcut"><i class="material-icons">&#xE315;</i>: Next song </div>
+            <div class="shortcut"><i class="material-icons">&#xE314;</i>: Previous song </div>
+            <div class="shortcut"><i class="material-icons">&#xE316;</i>/<i class="material-icons">&#xE313;</i>: Volume control</div>
+            <div class="shortcut"><i class="material-icons">&#xE256;</i>: Play/Pause</div>
+        </div>
         <div class="small-title">Playlists:</div>
         <div class="tip">Drag & Drop to re-order songs.</div>
         <div class="tip"><i class="material-icons">&#xE03B;</i>: Saves the current song selection in a new playlist file in your Drive.</div>

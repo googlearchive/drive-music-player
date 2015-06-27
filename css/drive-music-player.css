@@ -318,9 +318,9 @@ body,html {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	width: 407px;
-	min-width: 407px;
-	max-width: 407px;
+	width: 524px;
+	min-width: 524px;
+	max-width: 524px;
 }
 #flashAlert {
 	display: none;
@@ -566,8 +566,10 @@ div.jp-audio div.jp-type-single div.jp-progress {
         min-width: 65%;
         max-width: 65%;
     }
-    .remove {
-        opacity: 1;
+    .noID3tags {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
     }
     div.jp-audio div.jp-type-single div.jp-interface {
       height: 85px;
@@ -588,5 +590,13 @@ div.jp-audio div.jp-type-single div.jp-progress {
     }
     #empty td {
         padding-bottom: 10px;
+    }
+}
+@media only screen {
+    .remove {
+        opacity: 1;
+    }
+    .help .keyboard {
+        display:none;
     }
 }
