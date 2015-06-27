@@ -7,12 +7,17 @@
       if(window.location.host == "drive-music-player.appspot.com") {
         window.location.host = "www.driveplayer.com";
       }
+      // Hide the address bar on mobile web browsers.
+      window.addEventListener("load",function() {
+          setTimeout(function(){
+              // Hide the address bar!
+              window.scrollTo(0, 1);
+          }, 0);
+      });
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="http://storage.googleapis.com/materialdesignlite/material.css">
-    <script src="http://storage.googleapis.com/materialdesignlite/material.min.js"></script>
     <script type="text/javascript">
       try {
         var _gaq = _gaq || [];
@@ -51,6 +56,7 @@
     <link type="text/css" href="/css/drive-music-player.css" rel="stylesheet" />
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
+    <script src="js/jquery.ui.touch-punch.min.js"></script>
     <script type="text/javascript" src="//apis.google.com/js/api.js"></script>
     <script type="text/javascript"  src="//apis.google.com/js/client.js"></script>
     <script type="text/javascript" src="js/swfobject.js"></script>
@@ -186,7 +192,7 @@
     </div>
     <div id="footer">
         <span onclick="window.scrollTo(0, 9999999999999);var classes = document.getElementById('help').classList;classes.remove('highlighted');classes.add('highlight');setInterval(function () {classes.add('highlighted')}, 1)"><i class="material-icons">&#xE887;</i> Help</span>
-        <span onclick="window.open('https://github.com/nicolasgarnier/drive-music-player#readme')"><img src="/images/github-logo.png"> Project page on GitHub</span>
+        <span onclick="window.open('https://github.com/nicolasgarnier/drive-music-player#readme')"><img src="/images/github-logo.png"> Project on GitHub</span>
         <span onclick="window.open('https://github.com/nicolasgarnier/drive-music-player/issues/new')"><i class="material-icons">&#xE868;</i> Report a bug</span>
     </div>
   </body>

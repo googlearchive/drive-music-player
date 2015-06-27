@@ -497,3 +497,96 @@ div.jp-audio div.jp-type-single a.jp-unmute {
 div.jp-audio div.jp-volume-bar {
     left: 530px;
 }
+div.jp-current-time {
+    text-align: left;
+}
+div.jp-current-time, div.jp-duration {
+    width: auto;
+}
+div.jp-audio div.jp-type-single div.jp-time-holder,
+div.jp-audio div.jp-type-single div.jp-progress {
+    width: 286px;
+}
+@media (max-width: 650px) {
+      .main-container {
+          width: 100%;
+      }
+    .logo {
+        background: url('/images/marquee_tile_small.jpg') no-repeat;
+        width: 100%;
+        background-size: contain;
+        padding-top: 22.35%;
+        height: auto;
+        background-position-y: 0;
+    }
+    #footer {
+        width: 100%;
+        margin-left: 0;
+        left: auto;
+    }
+    #footer span {
+        margin: 0 1%;
+        padding-right: 2%;
+        padding-left: 2%;
+        height: 30px;
+    }
+    .help {
+        width: 95%;
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-top: 15px;
+        margin-bottom: 65px;
+    }
+    #buttonBar {
+        position: fixed;
+        width: 100%;
+        bottom: 30px;
+    }
+    .song.add {
+        padding-top: 15px;
+        padding-bottom: 20px;
+        width: 85%;
+    }
+    .create.playlist {
+        width: 15%;
+    }
+    div.jp-audio ul.jp-controls {
+        padding-left: 10px;
+    }
+    .song.add img {
+        margin-bottom: -7px;
+    }
+    .artist {
+        width: 35%;
+        min-width: 35%;
+        max-width: 35%;
+    }
+    .title {
+        width: 65%;
+        min-width: 65%;
+        max-width: 65%;
+    }
+    .remove {
+        opacity: 1;
+    }
+    div.jp-audio div.jp-type-single div.jp-interface {
+      height: 85px;
+    }
+    div.jp-audio div.jp-type-single div.jp-interface,
+    div.jp-audio div.jp-type-single a.jp-mute,
+    div.jp-audio div.jp-type-single a.jp-unmute {
+        margin-left: 0;
+    }
+    div.jp-audio div.jp-type-single div.jp-progress,
+    div.jp-audio div.jp-type-single div.jp-time-holder {
+        right: 15px;
+        width: auto;
+        left: 150px;
+    }
+    #empty img {
+        display: none;
+    }
+    #empty td {
+        padding-bottom: 10px;
+    }
+}
