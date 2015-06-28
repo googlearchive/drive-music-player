@@ -565,6 +565,7 @@ div.jp-audio div.jp-type-single div.jp-progress {
         width: 65%;
         min-width: 65%;
         max-width: 65%;
+        white-space: normal;
     }
     .noID3tags {
         width: 100%;
@@ -591,8 +592,6 @@ div.jp-audio div.jp-type-single div.jp-progress {
     #empty td {
         padding-bottom: 10px;
     }
-}
-@media only screen {
     .remove {
         opacity: 1;
     }
