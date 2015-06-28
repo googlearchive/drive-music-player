@@ -601,4 +601,10 @@ div.jp-audio div.jp-type-single div.jp-progress {
     .help .keyboard {
         display:none;
     }
+    div.jp-audio div.jp-type-single .jp-mute,
+    div.jp-audio div.jp-type-single .jp-unmute,
+    div.jp-audio div.jp-type-single .jp-volume-max,
+    div.jp-audio div.jp-type-single .jp-volume-bar{
+        display:none !important;
+    }
 }

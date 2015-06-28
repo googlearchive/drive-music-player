@@ -273,12 +273,12 @@
 	$.jPlayer.platform = {
 	};
 
-	var browserMatch = $.jPlayer.uaBrowser(navigator.userAgent);
+	var browserMatch = $.jPlayer.uaBrowser("Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"/*navigator.userAgent*/);
 	if ( browserMatch.browser ) {
 		$.jPlayer.browser[ browserMatch.browser ] = true;
 		$.jPlayer.browser.version = browserMatch.version;
 	}
-	var platformMatch = $.jPlayer.uaPlatform(navigator.userAgent);
+	var platformMatch = $.jPlayer.uaPlatform("Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"/*navigator.userAgent*/);
 	if ( platformMatch.platform ) {
 		$.jPlayer.platform[ platformMatch.platform ] = true;
 		$.jPlayer.platform.mobile = !platformMatch.tablet;
@@ -488,7 +488,7 @@
 			defaultPlaybackRate: 1,
 			minPlaybackRate: 0.5,
 			maxPlaybackRate: 4,
-			wmode: "opaque", // Valid wmode: window, transparent, opaque, direct, gpu. 
+			wmode: "opaque", // Valid wmode: window, transparent, opaque, direct, gpu.
 			backgroundColor: "#000000", // To define the jPlayer div and Flash background color.
 			cssSelectorAncestor: "#jp_container_1",
 			cssSelector: { // * denotes properties that should only be required when video media type required. _cssSelector() would require changes to enable splitting these into Audio and Video defaults.
@@ -780,9 +780,9 @@
 		},
 		_init: function() {
 			var self = this;
-			
+
 			this.element.empty();
-			
+
 			this.status = $.extend({}, this.status); // Copy static to unique instance.
 			this.internal = $.extend({}, this.internal); // Copy static to unique instance.
 
@@ -813,13 +813,13 @@
 			this.formats = []; // Array based on supplied string option. Order defines priority.
 			this.solutions = []; // Array based on solution string option. Order defines priority.
 			this.require = {}; // Which media types are required: video, audio.
-			
+
 			this.htmlElement = {}; // DOM elements created by jPlayer
 			this.html = {}; // In _init()'s this.desired code and setmedia(): Accessed via this[solution], where solution from this.solutions array.
 			this.html.audio = {};
 			this.html.video = {};
 			this.flash = {}; // In _init()'s this.desired code and setmedia(): Accessed via this[solution], where solution from this.solutions array.
-			
+
 			this.css = {};
 			this.css.cs = {}; // Holds the css selector strings
 			this.css.jq = {}; // Holds jQuery selectors. ie., $(css.cs.method)
@@ -949,7 +949,7 @@
 			this.internal.poster.jq.bind("click.jPlayer", function() {
 				self._trigger($.jPlayer.event.click);
 			});
-			
+
 			// Generate the required media elements
 			this.html.audio.available = false;
 			if(this.require.audio) { // If a supplied format is audio
@@ -1017,11 +1017,11 @@
 
 			// Set up the css selectors for the control and feedback entities.
 			this._cssSelectorAncestor(this.options.cssSelectorAncestor);
-			
+
 			// If neither html nor flash are being used by this browser, then media playback is not possible. Trigger an error event.
 			if(!(this.html.used || this.flash.used)) {
 				this._error( {
-					type: $.jPlayer.error.NO_SOLUTION, 
+					type: $.jPlayer.error.NO_SOLUTION,
 					context: "{solution:'" + this.options.solution + "', supplied:'" + this.options.supplied + "'}",
 					message: $.jPlayer.errorMsg.NO_SOLUTION,
 					hint: $.jPlayer.errorHint.NO_SOLUTION
@@ -1041,7 +1041,7 @@
 				flashVars = 'jQuery=' + encodeURI(this.options.noConflict) + '&id=' + encodeURI(this.internal.self.id) + '&vol=' + this.options.volume + '&muted=' + this.options.muted;
 
 				// Code influenced by SWFObject 2.2: http://code.google.com/p/swfobject/
-				// Non IE browsers have an initial Flash size of 1 by 1 otherwise the wmode affected the Flash ready event. 
+				// Non IE browsers have an initial Flash size of 1 by 1 otherwise the wmode affected the Flash ready event.
 
 				if($.jPlayer.browser.msie && (Number($.jPlayer.browser.version) < 9 || $.jPlayer.browser.documentMode < 9)) {
 					var objStr = '<object id="' + this.internal.flash.id + '" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="0" height="0" tabindex="-1"></object>';
@@ -1061,7 +1061,7 @@
 				} else {
 					var createParam = function(el, n, v) {
 						var p = document.createElement("param");
-						p.setAttribute("name", n);	
+						p.setAttribute("name", n);
 						p.setAttribute("value", v);
 						el.appendChild(p);
 					};
@@ -1183,7 +1183,7 @@
 			this.element.removeData("jPlayer"); // Remove jPlayer data
 			this.element.unbind(".jPlayer"); // Remove all event handlers created by the jPlayer constructor
 			this.element.empty(); // Remove the inserted child elements
-			
+
 			delete this.instances[this.internal.instance]; // Clear the instance on the static instance object
 		},
 		enable: function() { // Plan to implement
@@ -1221,7 +1221,7 @@
 		_uaBlocklist: function(list) {
 			// list : object with properties that are all regular expressions. Property names are irrelevant.
 			// Returns true if the user agent is matched in list.
-			var	ua = navigator.userAgent.toLowerCase(),
+			var	ua = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36",//navigator.userAgent.toLowerCase(),
 				block = false;
 
 			$.each(list, function(p, re) {
@@ -1271,7 +1271,7 @@
 			// Create the event listeners
 			// Only want the active entity to affect jPlayer and bubble events.
 			// Using entity.gate so that object is referenced and gate property always current
-			
+
 			mediaElement.addEventListener("progress", function() {
 				if(entity.gate) {
 					if(self.internal.cmdsIgnored && this.readyState > 0) { // Detect iOS executed the command
@@ -1435,7 +1435,7 @@
 				sp = 100;
 				cpr = cpa;
 			}
-			
+
 			if(override) {
 				ct = 0;
 				cpr = 0;
@@ -1505,7 +1505,7 @@
 
 							// Need to read original status before issuing the setMedia command.
 							var	currentTime = this.status.currentTime,
-								paused = this.status.paused; 
+								paused = this.status.paused;
 
 							this.setMedia(this.status.media);
 							this.volumeWorker(this.options.volume);
@@ -1726,7 +1726,7 @@
 			return media;
 		},
 		setMedia: function(media) {
-		
+
 			/*	media[format] = String: URL of format. Must contain all of the supplied option's video or audio formats.
 			 *	media.poster = String: Video poster URL.
 			 *	media.track = Array: Of objects defining the track element: kind, src, srclang, label, def.
@@ -1789,7 +1789,7 @@
 							}
 							self.status.video = false;
 						}
-						
+
 						supported = true;
 						return false; // Exit $.each
 					}
@@ -2127,7 +2127,7 @@
 					if(cssSel) { // Checks for empty string
 						this.css.jq[fn] = $(this.css.cs[fn]);
 					} else {
-						this.css.jq[fn] = []; // To comply with the css.jq[fn].length check before its use. As of jQuery 1.4 could have used $() for an empty set. 
+						this.css.jq[fn] = []; // To comply with the css.jq[fn].length check before its use. As of jQuery 1.4 could have used $() for an empty set.
 					}
 
 					if(this.css.jq[fn].length && this[fn]) {
@@ -2838,7 +2838,7 @@
 								break;
 							case "rtmpv":
 								self._getMovie().fl_setVideo_rtmp(media[format]);
-								break;		
+								break;
 						}
 						self.status.src = media[format];
 						self.status.format[format] = true;
