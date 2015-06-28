@@ -559,7 +559,10 @@ div.jp-audio div.jp-type-single div.jp-progress {
     .artist {
         width: 35%;
         min-width: 35%;
-        max-width: 35%;
+        max-width: 35%;;
+    }
+    td.error.artist {
+        white-space: normal
     }
     .title {
         width: 65%;
@@ -567,7 +570,7 @@ div.jp-audio div.jp-type-single div.jp-progress {
         max-width: 65%;
         white-space: normal;
     }
-    .noID3tags {
+    .noID3tags, td.error {
         width: 100%;
         min-width: 100%;
         max-width: 100%;
