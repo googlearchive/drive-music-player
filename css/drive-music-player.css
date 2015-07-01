@@ -15,7 +15,7 @@ body,html {
 .logo {
 	background: url('/images/marquee_tile.jpg') no-repeat;
     background-size: 640px;
-    background-position-y: -40px;
+    background-position: 50% -40px;
     width: 100%;
     height: 180px;
 }
@@ -100,7 +100,7 @@ body,html {
 }
 
 .song.add {
-	padding: 17px 0 13px 0;
+	padding: 14px 0 13px 0;
 	border-top: none;
 	background-color: #EEE;
 	text-align: center;
@@ -108,13 +108,13 @@ body,html {
 	width: 90%;
 	float: left;
 	margin-right: -3px;
-	height: 26px;
+	height: 29px;
 }
 
 .song.add img {
 	height: 25px;
 	padding-right: 15px;
-    margin-top: -3px;
+    margin-bottom: -6px;
 }
 
 .song.add:HOVER, .create.playlist:HOVER {
@@ -278,9 +278,9 @@ body,html {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	width: 407px;
-	min-width: 407px;
-	max-width: 407px;
+    width: 524px;
+    min-width: 524px;
+    max-width: 524px;
 	height: 22px;
 }
 
@@ -517,7 +517,7 @@ div.jp-audio div.jp-type-single div.jp-progress {
         background-size: contain;
         padding-top: 22.35%;
         height: auto;
-        background-position-y: 0;
+        background-position: 0 0;
     }
     #footer {
         width: 100%;

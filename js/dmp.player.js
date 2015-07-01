@@ -22,10 +22,10 @@ dmp.player.html5PlayerIsWorking = function(){
  * Initializes the Player and starts playing if there is a song.
  */
 dmp.player.initPlayer = function(){
-  var solution = "flash,html";
+  var solution = "html";
   // In the HTML5 player support most formats (like Chrome) then we only use the HTML5 player and not the Flash player.
-  if (dmp.player.html5PlayerIsWorking()) {
-    solution = "html";
+  if (!swfobject.hasFlashPlayerVersion("9.0.0")) {
+    solution = "flash,html";
   }
   // Show an error message after 1 second for users who have a flash blocker when we need flash.
   var flashBlockerDetectionTimer = window.setTimeout(function() {
@@ -37,7 +37,7 @@ dmp.player.initPlayer = function(){
       swfPath: "/js",
       errorAlerts: false,
       solution: solution,
-      supplied: "mp3,m4a,wav,oga,webma,fla",
+      supplied: "mp3,m4a,wav,oga,webma,fla,flac",
       keyEnabled: true,
       preload:"auto",
       error: function(event) {
@@ -174,6 +174,20 @@ dmp.player.playFile = function(songId, stop, tracktime) {
           $("#file-" + songId).addClass("playing");
           if (dmp.player.currentlyLoaded != fileUrl) {
             var setMediaValue = {};
+            // map some extensions
+              if (fileExtension == "ogg") fileExtension = "oga";
+              if (fileExtension == "ogv") fileExtension = "oga";
+              if (fileExtension == "webm") fileExtension = "webma";
+              if (fileExtension == "mp4") fileExtension = "m4a";
+              if (fileExtension == "m4b") fileExtension = "m4a";
+              if (fileExtension == "m4r") fileExtension = "m4a";
+              if (fileExtension == "m4v") fileExtension = "m4a";
+              if (fileExtension == "wave") fileExtension = "wav";
+              if (fileExtension == "flv") fileExtension = "fla";
+              if (fileExtension == "f4v") fileExtension = "fla";
+              if (fileExtension == "f4p") fileExtension = "fla";
+              if (fileExtension == "f4a") fileExtension = "fla";
+              if (fileExtension == "f4b") fileExtension = "fla";
             setMediaValue[fileExtension] = fileUrl;
             $("#jqueryPlayerContainer").jPlayer("setMedia", setMediaValue);
             dmp.player.currentlyLoaded = fileUrl;

@@ -1221,7 +1221,7 @@
 		_uaBlocklist: function(list) {
 			// list : object with properties that are all regular expressions. Property names are irrelevant.
 			// Returns true if the user agent is matched in list.
-			var	ua = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36",//navigator.userAgent.toLowerCase(),
+			var	ua =/*navigator.userAgent.toLowerCase(),*/"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36",
 				block = false;
 
 			$.each(list, function(p, re) {

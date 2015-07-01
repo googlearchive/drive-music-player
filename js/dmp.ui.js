@@ -165,7 +165,8 @@ dmp.ui.createSongEntry = function(fileInfo, callback) {
  */
 dmp.ui.buildPicker = function() {
     // List of supported MIME Types.
-    var supportedMimeType = "audio/mpeg3,audio/x-mpeg-3,video/x-mpeg,audio/mp3,audio/mpeg,audio/mp4,audio/mpg,audio/mp4a-latm,audio/ogg,audio/webm,audio/wav,audio/x-wav,audio/wave";
+    var supportedMimeType = "audio/mpeg3,audio/x-mpeg-3,audio/mp3,audio/mpeg,audio/mp4,audio/mpg,audio/mp4a-latm,audio/ogg,application/ogg,audio/webm,audio/wav,audio/x-wav,audio/wave,audio/x-flv,audio/x-flac";
+    var videoMimeType = "video/mp4,video/x-mpeg,video/webm,video/x-flv";
 
     // Search Songs in Drive View.
     var view = new google.picker.DocsView();
@@ -178,7 +179,7 @@ dmp.ui.buildPicker = function() {
     view2.setLabel("📂\u00A0My\u00A0Drive");
     view2.setIncludeFolders(true);
     view2.setParent("root");
-    view2.setMimeTypes(supportedMimeType);
+    view2.setMimeTypes(supportedMimeType + "," + videoMimeType);
     view2.setMode(google.picker.DocsViewMode.LIST);
     view2.setSelectFolderEnabled(dmp.testUser);
 
@@ -204,7 +205,7 @@ dmp.ui.buildPicker = function() {
     customFolderView.setIncludeFolders(true);
     //customFolderView.setSelectFolderEnabled(true);
     customFolderView.setParent(dmp.folderId);
-    customFolderView.setMimeTypes(supportedMimeType);
+    customFolderView.setMimeTypes(supportedMimeType + "," + videoMimeType);
     customFolderView.setMode(google.picker.DocsViewMode.LIST);
     newPickerBuilder.addView(customFolderView);
   }
@@ -212,6 +213,7 @@ dmp.ui.buildPicker = function() {
   var newPicker = newPickerBuilder.enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
     .setAppId(dmp.auth.APPLICATION_ID)
     .setOAuthToken(dmp.auth.accessToken)
+    .setOrigin(window.location.protocol + '//' + window.location.host)
     .addView(view)
     .addView(view2)
     .addView(view3)
