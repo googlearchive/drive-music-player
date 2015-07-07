@@ -84,12 +84,16 @@ dmp.playlist.loadPlaylist = function(file) {
 dmp.playlist.handleErrors = function(e) {
   if(e.type == gapi.drive.realtime.ErrorType.TOKEN_REFRESH_REQUIRED) {
     dmp.auth.autoRefreshAuth();
-  } else if(e.type == gapi.drive.realtime.ErrorType.CLIENT_ERROR) {
-    location.reload();
   } else if(e.type == gapi.drive.realtime.ErrorType.NOT_FOUND) {
     alert("The file was not found. It does not exist or you do not have read access to the file.");
   } else {
-    location.reload();
+      if(ga) {
+          ga('send', 'event', 'playlist', 'unknown_error',
+              e.type + " - " + e.message + " - isFatal:" + e.isFatal);
+      }
+      if (e.isFatal) {
+          window.setTimeout(location.reload, 500);
+      }
   }
 };
 

@@ -58,12 +58,23 @@ dmp.player.initPlayer = function(){
         } else {
           try {
             $(".artist", $("#file-" + dmp.playlist.getCurrentSongId()))
-                .text("Sorry! An error occured while attempting to play this song.")
+                .text("Sorry! We are unable to play this song. More...")
                 .addClass("error").attr("colspan", "2")
                 .attr("title", "Your browser might not support this audio format." + (dmp.player.hasFlash ? "" : " Try installing Flash."));
 
-              if(ga) {
-                  ga('send', 'event', 'player', 'format_not_supported', dmp.player.currentExtenstion + ' - ' + dmp.player.flash);
+              // Tracking errors in GA.
+              if(ga && dmp.player.currentMime.indexOf(dmp.playlist.PLAYLIST_MIME_TYPE) === -1 &&
+                  dmp.player.currentMime !== dmp.drive.FOLDER_MIME_TYPE) {
+                  if (dmp.player.currentExtenstion === undefined) {
+                      ga('send', 'event', 'player', 'format_not_supported',
+                          dmp.player.currentExtenstion +' - ' +
+                          dmp.player.currentMime);
+                  } else {
+                      ga('send', 'event', 'player', 'format_not_supported',
+                          dmp.player.currentExtenstion + ' - ' +
+                          dmp.player.flash + ' - ' +
+                          navigator.browserInfo.browser);
+                  }
               }
             $(".title", $("#file-" + dmp.playlist.getCurrentSongId())).remove();
           } catch (e) {}
@@ -176,6 +187,7 @@ dmp.player.playPrevious = function(e, fromError) {
  */
 dmp.player.currentlyLoaded = undefined;
 dmp.player.currentExtenstion = undefined;
+dmp.player.currentMime = undefined;
 dmp.player.playFile = function(songId, stop, tracktime) {
 
 
@@ -244,6 +256,7 @@ dmp.player.playFile = function(songId, stop, tracktime) {
             setMediaValue[fileExtension] = fileUrl;
             dmp.player.currentlyLoaded = fileUrl;
             dmp.player.currentExtenstion = fileExtension;
+            dmp.player.currentMime = mimeType;
             $("#jqueryPlayerContainer").jPlayer("setMedia", setMediaValue);
           }
           if (stop) {
