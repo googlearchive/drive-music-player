@@ -131,7 +131,8 @@ dmp.drive.getFileUrl = function(fileId, callback, retryCounter) {
             resp.mimeType == dmp.drive.FOLDER_MIME_TYPE,
             resp.thumbnailLink,
             resp.md5Checksum,
-            resp.mimeType == (dmp.playlist.PLAYLIST_MIME_TYPE + "." + dmp.auth.APPLICATION_ID));
+            resp.mimeType == (dmp.playlist.PLAYLIST_MIME_TYPE + "." + dmp.auth.APPLICATION_ID),
+            resp.mimeType);
       // The return object has no title, maybe it;s an error so we retry.
       } else if (!retryCounter || retryCounter == 0){
         dmp.drive.getFileUrl(fileId, callback, 1);

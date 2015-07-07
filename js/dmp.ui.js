@@ -129,11 +129,18 @@ dmp.ui.createSongEntry = function(fileInfo, callback) {
         $(".artist", $("#file-" + fileInfo.id))
             .text("You are not authorized to read this file or the file does not exist.")
             .addClass("error").attr("colspan", "2");
+
+          if(ga) {
+              ga('send', 'event', 'player', 'not_authorized');
+          }
         $(".title", $("#file-" + fileInfo.id)).remove();
       } else if (error) {
         $(".artist", $("#file-" + fileInfo.id))
             .text("There was an error reading the file: " + error.message)
             .addClass("error").attr("colspan", "2");
+          if(ga) {
+              ga('send', 'event', 'error', 'error_reading_file', error.message);
+          }
         $(".title", $("#file-" + fileInfo.id)).remove();
       } else if (fileInfo.md5 && fileInfo.md5 == md5) { // If we already have all the tags cached in the playlist we display them right away.
         dmp.ui.displayID3Tags(fileInfo.id, fileInfo.title, fileInfo.artist, fileName, thumbnailUrl);
@@ -233,6 +240,9 @@ dmp.ui.pickerCallback = function(data) {
   if (data.action == google.picker.Action.PICKED) {
     var numberOfSongsBefore = dmp.playlist.audioList.length;
     for (var index in data.docs) {
+      if(ga) {
+        ga('send', 'event', 'player', 'added_song', data.docs.length);
+      }
       // If the song is not already in the playlist we add it.
       if (data.docs[index].id
           && dmp.playlist.getSongIndex(data.docs[index].id) == -1) {

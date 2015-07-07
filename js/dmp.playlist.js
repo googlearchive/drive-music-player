@@ -53,6 +53,11 @@ dmp.playlist.createNewPlaylist = function() {
       }
     }).execute(dmp.playlist.loadPlaylist);
   });
+
+    if(ga) {
+        ga('send', 'event', 'playlist', 'create');
+    }
+
 };
 
 
@@ -66,6 +71,10 @@ dmp.playlist.loadPlaylist = function(file) {
         dmp.playlist.initializeModel,
         dmp.playlist.handleErrors);
   });
+
+    if(ga) {
+        ga('send', 'event', 'playlist', 'load');
+    }
 };
 
 
@@ -146,6 +155,10 @@ dmp.playlist.renamePlaylistFromInput = function() {
     $('#playlistNameContainer').removeAttr('disabled');
     dmp.playlist.fileName.setText(resp.title);
   });
+
+    if(ga) {
+        ga('send', 'event', 'playlist', 'rename');
+    }
 };
 
 /**
@@ -160,6 +173,10 @@ dmp.playlist.closePlaylist = function() {
   dmp.playlist.realtimeDoc.close();
   dmp.playlist.realtimeDoc = undefined;
   dmp.url.makePrettyUrl();
+
+    if(ga) {
+        ga('send', 'event', 'playlist', 'close');
+    }
 };
 
 

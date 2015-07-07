@@ -21,15 +21,25 @@ dmp.player.html5PlayerIsWorking = function(){
 /**
  * Initializes the Player and starts playing if there is a song.
  */
+dmp.player.hasFlash = false;
+dmp.player.flash = "no_flash";
 dmp.player.initPlayer = function(){
   var solution = "html";
   // In the HTML5 player support most formats (like Chrome) then we only use the HTML5 player and not the Flash player.
   if (!swfobject.hasFlashPlayerVersion("9.0.0")) {
-    solution = "flash,html";
+      dmp.player.flash = "flash_ok";
+      dmp.player.hasFlash = true;
+      solution = "flash,html";
+  }
+  if(ga) {
+    ga('send', 'event', 'flash', dmp.player.flash);
   }
   // Show an error message after 1 second for users who have a flash blocker when we need flash.
   var flashBlockerDetectionTimer = window.setTimeout(function() {
-        $('#flashAlert').show();
+      if(ga) {
+        ga('send', 'event', 'error', 'show_flash_blocker');
+      }
+      $('#flashAlert').show();
     }, 1000);
   // Initialize the Player.
   $("#jqueryPlayerContainer").jPlayer({
@@ -50,7 +60,11 @@ dmp.player.initPlayer = function(){
             $(".artist", $("#file-" + dmp.playlist.getCurrentSongId()))
                 .text("Sorry! An error occured while attempting to play this song.")
                 .addClass("error").attr("colspan", "2")
-                .attr("title", "Your browser might not support this audio format.");
+                .attr("title", "Your browser might not support this audio format." + (dmp.player.hasFlash ? "" : " Try installing Flash."));
+
+              if(ga) {
+                  ga('send', 'event', 'player', 'format_not_supported', dmp.player.currentExtenstion + ' - ' + dmp.player.flash);
+              }
             $(".title", $("#file-" + dmp.playlist.getCurrentSongId())).remove();
           } catch (e) {}
         }
@@ -161,10 +175,13 @@ dmp.player.playPrevious = function(e, fromError) {
  * Plays the song of the given ID.
  */
 dmp.player.currentlyLoaded = undefined;
+dmp.player.currentExtenstion = undefined;
 dmp.player.playFile = function(songId, stop, tracktime) {
+
+
   dmp.playlist.setCurrentSongId(songId);
   dmp.drive.getFileUrl(songId,
-      function(fileUrl, fileName, error, fileExtension, isFolder) {
+      function(fileUrl, fileName, error, fileExtension, isFolder, thumb, md5, isPlaylist, mimeType) {
         if (error) {
           dmp.player.playNext(null, true);
         } else if(isFolder) {
@@ -175,22 +192,59 @@ dmp.player.playFile = function(songId, stop, tracktime) {
           if (dmp.player.currentlyLoaded != fileUrl) {
             var setMediaValue = {};
             // map some extensions
-              if (fileExtension == "ogg") fileExtension = "oga";
-              if (fileExtension == "ogv") fileExtension = "oga";
-              if (fileExtension == "webm") fileExtension = "webma";
-              if (fileExtension == "mp4") fileExtension = "m4a";
-              if (fileExtension == "m4b") fileExtension = "m4a";
-              if (fileExtension == "m4r") fileExtension = "m4a";
-              if (fileExtension == "m4v") fileExtension = "m4a";
-              if (fileExtension == "wave") fileExtension = "wav";
-              if (fileExtension == "flv") fileExtension = "fla";
-              if (fileExtension == "f4v") fileExtension = "fla";
-              if (fileExtension == "f4p") fileExtension = "fla";
-              if (fileExtension == "f4a") fileExtension = "fla";
-              if (fileExtension == "f4b") fileExtension = "fla";
+              var extensionMapping = {
+                  "ogg":"oga",
+                  "ogv":"oga",
+                  "webm":"webma",
+                  "mp4":"m4a",
+                  "m4b":"m4a",
+                  "m4r":"m4a",
+                  "m4v":"m4a",
+                  "wave":"wav",
+                  "flv":"fla",
+                  "f4v":"fla",
+                  "f4p":"fla",
+                  "f4a":"fla",
+                  "f4b":"fla"
+              };
+
+              var mimeMapping = {
+                  "audio/mpeg3":"mp3",
+                  "audio/x-mpeg-3":"mp3",
+                  "audio/mp3":"mp3",
+                  "audio/mpeg":"mp3",
+                  "audio/mp4":"m4a",
+                  "audio/mpg":"mp3",
+                  "audio/mp4a-latm":"m4a",
+                  "audio/ogg":"oga",
+                  "application/ogg":"oga",
+                  "audio/webm":"webma",
+                  "audio/wav":"wav",
+                  "audio/x-wav":"wav",
+                  "audio/wave":"wav",
+                  "audio/x-flv":"fla",
+                  "audio/x-flac":"flac",
+                  "video/mp4":"m4a",
+                  "video/x-mpeg":"m4a",
+                  "video/webm":"webma",
+                  "video/x-flv":"fla"
+              };
+
+              if(extensionMapping[fileExtension]) {
+                  fileExtension = extensionMapping[fileExtension];
+              }
+              if(fileExtension === undefined || fileExtension == "") {
+                  fileExtension = mimeMapping[mimeType];
+              }
+
+              if(ga) {
+                  ga('send', 'event', 'player', 'play', fileExtension);
+              }
+
             setMediaValue[fileExtension] = fileUrl;
-            $("#jqueryPlayerContainer").jPlayer("setMedia", setMediaValue);
             dmp.player.currentlyLoaded = fileUrl;
+            dmp.player.currentExtenstion = fileExtension;
+            $("#jqueryPlayerContainer").jPlayer("setMedia", setMediaValue);
           }
           if (stop) {
             $("#jqueryPlayerContainer").jPlayer("stop");
@@ -198,6 +252,10 @@ dmp.player.playFile = function(songId, stop, tracktime) {
             $("#jqueryPlayerContainer").jPlayer("play", tracktime);
           } else{
             $("#jqueryPlayerContainer").jPlayer("play");
+
+              if(ga) {
+                  ga('send', 'event', 'player', 'replay');
+              }
           }
         }
       }
@@ -208,11 +266,17 @@ dmp.player.playFile = function(songId, stop, tracktime) {
 $(document).keydown(function(e){
   // Right arrow key.
   if (e.keyCode == 39) {
+      if(ga) {
+          ga('send', 'event', 'player', 'next_key');
+      }
     dmp.player.playNext(e);
     return false;
   }
   // Left arrow key.
   if (e.keyCode == 37) {
+      if(ga) {
+          ga('send', 'event', 'player', 'previous_key');
+      }
     dmp.player.playPrevious(e);
     return false;
   }
