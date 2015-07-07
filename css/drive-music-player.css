@@ -570,6 +570,9 @@ div.jp-audio div.jp-type-single div.jp-progress {
         max-width: 65%;
         white-space: normal;
     }
+    .title.hide{
+        display:none;
+    }
     .noID3tags, td.error {
         width: 100%;
         min-width: 100%;

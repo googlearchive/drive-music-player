@@ -60,7 +60,9 @@ dmp.player.initPlayer = function(){
             $(".artist", $("#file-" + dmp.playlist.getCurrentSongId()))
                 .text("Sorry! We are unable to play this song. More...")
                 .addClass("error").attr("colspan", "2")
-                .attr("title", "Your browser might not support this audio format." + (dmp.player.hasFlash ? "" : " Try installing Flash."));
+                .attr("title", "Your browser might not support this audio format." +
+                    (dmp.player.hasFlash ? "" : " Try installing Flash."));
+              $(".title", $("#file-" + dmp.playlist.getCurrentSongId())).addClass("hide");
 
               // Tracking errors in GA.
               if(ga && dmp.player.currentMime.indexOf(dmp.playlist.PLAYLIST_MIME_TYPE) === -1 &&
@@ -76,7 +78,6 @@ dmp.player.initPlayer = function(){
                           navigator.browserInfo.browser);
                   }
               }
-            $(".title", $("#file-" + dmp.playlist.getCurrentSongId())).remove();
           } catch (e) {}
         }
       },

@@ -324,6 +324,12 @@ dmp.ui.extractID3Tags = function(fileId, fileUrl, fileName, md5, thumbnailLink) 
  * @param{String} albumCoverUrl The URL of the cover.
  */
 dmp.ui.displayID3Tags = function(fileId, title, artist, fileName, albumCoverUrl) {
+
+  // remove possible error styling applied to the
+    $(".artist", $("#file-" + fileId)).removeClass("error").removeAttr("colspan")
+        .removeAttr("title");
+    $(".title", $("#file-" + fileId)).removeClass("hide");
+
   if (artist && title) {
     $(".artist", $("#file-" + fileId)).text(artist);
     $(".title", $("#file-" + fileId)).text(title);
@@ -332,7 +338,7 @@ dmp.ui.displayID3Tags = function(fileId, title, artist, fileName, albumCoverUrl)
     }
   } else {
     $(".artist", $("#file-" + fileId)).text(fileName).addClass("noID3tags").attr("colspan", "2");
-    $(".title", $("#file-" + fileId)).remove();
+    $(".title", $("#file-" + fileId)).addClass("hide");
   }
 };
 
