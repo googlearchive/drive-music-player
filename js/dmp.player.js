@@ -29,7 +29,7 @@ dmp.player.initPlayer = function(){
   if (swfobject.hasFlashPlayerVersion("9.0.0")) {
       dmp.player.flash = "flash_ok";
       dmp.player.hasFlash = true;
-      solution = "flash,html";
+      solution = "html,flash";
   }
   if(ga) {
     ga('send', 'event', 'flash', dmp.player.flash);
