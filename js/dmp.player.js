@@ -26,7 +26,7 @@ dmp.player.flash = "no_flash";
 dmp.player.initPlayer = function(){
   var solution = "html";
   // In the HTML5 player support most formats (like Chrome) then we only use the HTML5 player and not the Flash player.
-  if (!swfobject.hasFlashPlayerVersion("9.0.0")) {
+  if (swfobject.hasFlashPlayerVersion("9.0.0")) {
       dmp.player.flash = "flash_ok";
       dmp.player.hasFlash = true;
       solution = "flash,html";

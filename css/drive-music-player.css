@@ -507,6 +507,9 @@ div.jp-audio div.jp-type-single div.jp-time-holder,
 div.jp-audio div.jp-type-single div.jp-progress {
     width: 286px;
 }
+.title.hide {
+    display: none;
+}
 @media (max-width: 650px) {
       .main-container {
           width: 100%;
@@ -569,9 +572,6 @@ div.jp-audio div.jp-type-single div.jp-progress {
         min-width: 65%;
         max-width: 65%;
         white-space: normal;
-    }
-    .title.hide{
-        display:none;
     }
     .noID3tags, td.error {
         width: 100%;
