@@ -239,10 +239,10 @@ dmp.ui.buildPicker = function() {
 dmp.ui.pickerCallback = function(data) {
   if (data.action == google.picker.Action.PICKED) {
     var numberOfSongsBefore = dmp.playlist.audioList.length;
+    if(ga) {
+      ga('send', 'event', 'player', 'added_song', data.docs.length);
+    }
     for (var index in data.docs) {
-      if(ga) {
-        ga('send', 'event', 'player', 'added_song', data.docs.length);
-      }
       // If the song is not already in the playlist we add it.
       if (data.docs[index].id
           && dmp.playlist.getSongIndex(data.docs[index].id) == -1) {
