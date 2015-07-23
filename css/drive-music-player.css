@@ -53,13 +53,13 @@ body,html {
 .help .material-icons {
     font-size: 12px;
 }
-
 #jp_container_1 {
 	overflow: hidden;
 	border-color: #ccc;
-    box-sizing: border-box;
-    width: 100%;
-    border-top: 0;
+  box-sizing: border-box;
+  width: 100%;
+  border-top: 0;
+  z-index: 9999;
 }
 
 .song {
