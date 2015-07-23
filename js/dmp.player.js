@@ -71,6 +71,7 @@ dmp.player.initPlayer = function(){
                   } else {
                       ga('send', 'event', 'player', 'format_not_supported',
                           dmp.player.currentExtenstion + ' - ' +
+                          dmp.player.currentMime + ' - ' +
                           dmp.player.flash + ' - ' +
                           navigator.browserInfo.browser);
                   }
