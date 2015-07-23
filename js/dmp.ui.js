@@ -25,7 +25,15 @@ dmp.ui.createSongEntries = function() {
   // Makes the song's UI elements sortable by dragging them.
   $("#fileContainer tbody").sortable({
     helper : 'clone',
-    update: dmp.ui.createSongListFromDom
+    axis: 'y',
+    cursor: 'move',
+    zIndex: 9999,
+    containment: $('#fileContainer'),
+    update: dmp.ui.createSongListFromDom,
+    opacity: 0.7,
+    sort: function(event, ui) {
+      ui.helper.css({'top' : ui.position.top + $(window).scrollTop() + 'px'});
+    }
   }).disableSelection();
 };
 
