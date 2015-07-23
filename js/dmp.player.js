@@ -187,8 +187,6 @@ dmp.player.currentlyLoaded = undefined;
 dmp.player.currentExtenstion = undefined;
 dmp.player.currentMime = undefined;
 dmp.player.playFile = function(songId, stop, tracktime) {
-
-
   dmp.playlist.setCurrentSongId(songId);
   dmp.drive.getFileUrl(songId,
       function(fileUrl, fileName, error, fileExtension, isFolder, thumb, md5, isPlaylist, mimeType) {
@@ -196,60 +194,66 @@ dmp.player.playFile = function(songId, stop, tracktime) {
           dmp.player.playNext(null, true);
         } else if(isFolder) {
             // Do nothing as if it is a folder we're likely to be currently loading its children.
+        } else if(isPlaylist) {
+          // Do nothing as if it is a playlist we're likely to be currently loading its children.
         } else {
           $(".playing").removeClass("playing");
           $("#file-" + songId).addClass("playing");
           if (dmp.player.currentlyLoaded != fileUrl) {
             var setMediaValue = {};
             // map some extensions
-              var extensionMapping = {
-                  "ogg":"oga",
-                  "ogv":"oga",
-                  "webm":"webma",
-                  "mp4":"m4a",
-                  "m4b":"m4a",
-                  "m4r":"m4a",
-                  "m4v":"m4a",
-                  "wave":"wav",
-                  "flv":"fla",
-                  "f4v":"fla",
-                  "f4p":"fla",
-                  "f4a":"fla",
-                  "f4b":"fla"
-              };
+            var extensionMapping = {
+                "ogg":"oga",
+                "ogv":"oga",
+                "webm":"webma",
+                "mp4":"m4a",
+                "m4b":"m4a",
+                "m4r":"m4a",
+                "m4v":"m4a",
+                "wave":"wav",
+                "flv":"fla",
+                "f4v":"fla",
+                "f4p":"fla",
+                "f4a":"fla",
+                "f4b":"fla"
+            };
 
-              var mimeMapping = {
-                  "audio/mpeg3":"mp3",
-                  "audio/x-mpeg-3":"mp3",
-                  "audio/mp3":"mp3",
-                  "audio/mpeg":"mp3",
-                  "audio/mp4":"m4a",
-                  "audio/mpg":"mp3",
-                  "audio/mp4a-latm":"m4a",
-                  "audio/ogg":"oga",
-                  "application/ogg":"oga",
-                  "audio/webm":"webma",
-                  "audio/wav":"wav",
-                  "audio/x-wav":"wav",
-                  "audio/wave":"wav",
-                  "audio/x-flv":"fla",
-                  "audio/x-flac":"flac",
-                  "video/mp4":"m4a",
-                  "video/x-mpeg":"m4a",
-                  "video/webm":"webma",
-                  "video/x-flv":"fla"
-              };
+            var mimeMapping = {
+                "audio/mpeg3":"mp3",
+                "audio/x-mpeg-3":"mp3",
+                "audio/mp3":"mp3",
+                "audio/mpeg":"mp3",
+                "audio/mp4":"m4a",
+                "audio/mpg":"mp3",
+                "audio/mp4a-latm":"m4a",
+                "audio/ogg":"oga",
+                "application/ogg":"oga",
+                "audio/webm":"webma",
+                "audio/wav":"wav",
+                "audio/x-wav":"wav",
+                "audio/wave":"wav",
+                "audio/x-flv":"fla",
+                "audio/x-flac":"flac",
+                "video/mp4":"m4a",
+                "video/x-mpeg":"m4a",
+                "video/webm":"webma",
+                "video/x-flv":"fla"
+            };
 
-              if(extensionMapping[fileExtension]) {
-                  fileExtension = extensionMapping[fileExtension];
-              }
-              if(fileExtension === undefined || fileExtension == "") {
-                  fileExtension = mimeMapping[mimeType];
-              }
+            if (extensionMapping[fileExtension]) {
+              fileExtension = extensionMapping[fileExtension];
+            }
+            if (!fileExtension) {
+              fileExtension = mimeMapping[mimeType];
+            }
 
-              if(ga) {
-                  ga('send', 'event', 'player', 'play', fileExtension);
+            if(ga) {
+              if(!fileExtension) {
+                ga('send', 'event', 'player', 'play', "mime: " + mimeType);
+              } else {
+                ga('send', 'event', 'player', 'play', fileExtension);
               }
+            }
 
             setMediaValue[fileExtension] = fileUrl;
             dmp.player.currentlyLoaded = fileUrl;
@@ -264,9 +268,9 @@ dmp.player.playFile = function(songId, stop, tracktime) {
           } else{
             $("#jqueryPlayerContainer").jPlayer("play");
 
-              if(ga) {
-                  ga('send', 'event', 'player', 'replay');
-              }
+            if(ga) {
+              ga('send', 'event', 'player', 'replay');
+            }
           }
         }
       }
