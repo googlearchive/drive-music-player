@@ -31,9 +31,6 @@ dmp.player.initPlayer = function(){
       dmp.player.hasFlash = true;
       solution = "html,flash";
   }
-  if(ga) {
-    ga('send', 'event', 'flash', dmp.player.flash);
-  }
   // Show an error message after 1 second for users who have a flash blocker when we need flash.
   var flashBlockerDetectionTimer = window.setTimeout(function() {
       if(ga) {
