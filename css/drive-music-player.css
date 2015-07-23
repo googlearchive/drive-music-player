@@ -59,7 +59,6 @@ body,html {
   box-sizing: border-box;
   width: 100%;
   border-top: 0;
-  z-index: 9999;
 }
 
 .song {
