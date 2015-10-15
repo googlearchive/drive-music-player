@@ -1,5 +1,22 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
+
+<!--
+ Copyright 2013 Google Inc. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ -->
+
 <html>
   <head>
     <script type="text/javascript">
@@ -44,30 +61,25 @@
         window.location.hash = window.location.hash;
       </script>
     <![endif]-->
-    <!--[if lt IE 8]>
-      <script src="js/json2.js"></script>
-    <![endif]-->
     <script type="text/javascript"> if (!window.console) console = {log: function() {}}; </script>
     <meta name="description" content="Music Player for Google Drive is a simple and lightweight online music player for your audio files stored in Google Drive. It lets you open music files directly from Google Drive or from its own interface. Music Player for Google Drive offers: Playback of MP3 files, MP4, OGG (Audio), WAV, ACC (iTune's .m4a files), webm (Audio). - Support for ID3 tags v1 and v2as well as AAC file Tags. - Automatic display of Album covers. - Handles users signed-in multiple Google account elegantly. - Open Audio files directly from the Google Drive UI." />
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/jquery-ui.css" />
-    <link type="text/css" href="/skin/jplayer.blue.monday.css" rel="stylesheet" />
-    <link type="text/css" href="/css/drive-music-player.css" rel="stylesheet" />
+    <link type="text/css" href="third-party/jplayer/skin/jplayer.blue.monday.css" rel="stylesheet" />
+    <link type="text/css" href="css/drive-music-player.css" rel="stylesheet" />
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
-    <!-- script src="js/jquery.ui.touch-punch.min.js"></script -->
     <script type="text/javascript" src="//apis.google.com/js/api.js"></script>
     <script type="text/javascript" src="//apis.google.com/js/client.js"></script>
-    <script type="text/javascript" src="js/swfobject.js"></script>
-    <script type="text/javascript" src="js/jquery.jplayer.js"></script>
+    <script type="text/javascript" src="third-party/swfobject/swfobject.js"></script>
+    <script type="text/javascript" src="third-party/jplayer/js/jquery.jplayer.js"></script>
     <!--[if IE]>
       <script type="text/javascript" src="js/base64.js" ></script>
     <![endif]-->
-    <script type="text/javascript" src="js/swfobject.js"></script>
-    <script type="text/javascript" src="js/jdataview.js"></script>
-    <script type="text/javascript" src="js/id3.js" ></script>
-    <script type="text/javascript" src="js/id3v2.js" ></script>
-    <script type="text/javascript" src="js/id3v1.js" ></script>
-    <script type="text/javascript" src="js/id4.js" ></script>
+    <script type="text/javascript" src="third-party/jdataview/jdataview.js"></script>
+    <script type="text/javascript" src="third-party/id3-tag-reader/id3.js" ></script>
+    <script type="text/javascript" src="third-party/id3-tag-reader/id3v2.js" ></script>
+    <script type="text/javascript" src="third-party/id3-tag-reader/id3v1.js" ></script>
+    <script type="text/javascript" src="third-party/id3-tag-reader/id4.js" ></script>
     <script type="text/javascript" src="js/dmp.js" ></script>
     <script type="text/javascript" src="js/dmp.auth.js" ></script>
     <script type="text/javascript" src="js/dmp.drive.js" ></script>
@@ -193,7 +205,7 @@
     </div>
     <div id="footer">
         <span onclick="window.scrollTo(0, 9999999999999);var classes = document.getElementById('help').classList;classes.remove('highlighted');classes.add('highlight');setInterval(function () {classes.add('highlighted')}, 1)"><i class="material-icons">&#xE887;</i> Help</span>
-        <span onclick="window.open('https://github.com/nicolasgarnier/drive-music-player#readme')"><img src="/images/github-logo.png"> Project on GitHub</span>
+        <span onclick="window.open('https://github.com/nicolasgarnier/drive-music-player#readme')"><img src="/third-party/github-logo/github-logo.png"> Project on GitHub</span>
         <span onclick="window.open('https://github.com/nicolasgarnier/drive-music-player/issues/new')"><i class="material-icons">&#xE868;</i> Report a bug</span>
     </div>
   </body>

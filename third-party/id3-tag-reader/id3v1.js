@@ -2,9 +2,9 @@
  * JavaScript ID3 Tag Reader 0.1.2
  * Copyright (c) 2008 Jacob Seidelin, cupboy@gmail.com, http://blog.nihilogic.dk/
  * MIT License [http://www.opensource.org/licenses/mit-license.php]
- * 
- * Extended by Ant—nio Afonso (antonio.afonso@opera.com), Opera Software ASA
- * Modified by Ant—nio Afonso (antonio.afonso gmail.com)
+ *
+ * Extended by Antï¿½nio Afonso (antonio.afonso@opera.com), Opera Software ASA
+ * Modified by Antï¿½nio Afonso (antonio.afonso@gmail.com)
  * Modified by Nicolas Garnier (nivco.las@gmail.com)
  */
 
@@ -57,8 +57,8 @@
           } else {
             if (callback) {
               callback();
-            }            
-          }            
+            }
+          }
           return;
         }
       });
@@ -104,8 +104,8 @@
     		return {};
     	}
     };
-    
+
     // Export functions for closure compiler
     ns["ID3v1"] = ns.ID3v1;
-    
+
 })(this);

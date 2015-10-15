@@ -26,8 +26,8 @@ handlers:
 - url: /js
   static_dir: js
 
-- url: /skin
-  static_dir: skin
+- url: /third-party
+  static_dir: third-party
 
 - url: /css
   static_dir: css
