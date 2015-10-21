@@ -280,7 +280,9 @@ dmp.player.playFile = function(songId, stop, tracktime) {
             }
 
             if(ga) {
-              if(!fileExtension) {
+              if (dmp.player.currentlyLoaded == fileUrl) {
+                ga('send', 'event', 'player', 'replay');
+              } else if(!fileExtension) {
                 ga('send', 'event', 'player', 'play', "mime: " + mimeType);
               } else {
                 ga('send', 'event', 'player', 'play', fileExtension);
@@ -302,16 +304,13 @@ dmp.player.playFile = function(songId, stop, tracktime) {
             dmp.player.currentMime = mimeType;
             $("#jqueryPlayerContainer").jPlayer("setMedia", setMediaValue);
           }
+
           if (stop) {
             $("#jqueryPlayerContainer").jPlayer("stop");
           } else if (tracktime) {
             $("#jqueryPlayerContainer").jPlayer("play", tracktime);
           } else{
             $("#jqueryPlayerContainer").jPlayer("play");
-
-            if(ga) {
-              ga('send', 'event', 'player', 'replay');
-            }
           }
         }
       }
