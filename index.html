@@ -25,6 +25,9 @@
         window.location.host = "www.driveplayer.com";
       }
     </script>
+    <!-- Flurry Tracking -->
+    <script src="https://cdn.flurry.com/js/flurry.js"></script>
+    <script>if (typeof FlurryAgent !== 'undefined' ) FlurryAgent.startSession("HKRBZMJ659RHRX42BTYM");</script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
@@ -46,6 +49,7 @@
                   message = error.stack;
               }
               ga('send', 'event', 'error', file + ':' + lineNumber, String(message));
+              FlurryAgent.logError('js_error', file + ': ' + String(message), lineNumber);
           } catch (e) {
               // no-op
           }

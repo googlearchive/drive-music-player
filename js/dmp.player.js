@@ -50,6 +50,9 @@ dmp.player.initPlayer = function(){
       if(ga) {
         ga('send', 'event', 'error', 'show_flash_blocker');
       }
+      if (typeof FlurryAgent !== 'undefined' ) {
+        FlurryAgent.logEvent('show_flash_blocker');
+      }
       $('#flashAlert').show();
     }, 1000);
   // Initialize the Player.
@@ -90,7 +93,21 @@ dmp.player.initPlayer = function(){
                           navigator.browserInfo.browser);
                   }
               }
-          } catch (e) {}
+              // Tracking errors in Flurry.
+              if(typeof FlurryAgent !== 'undefined' && dmp.player.currentMime.indexOf(dmp.playlist.PLAYLIST_MIME_TYPE) === -1 &&
+                dmp.player.currentMime !== dmp.drive.FOLDER_MIME_TYPE) {
+                if (dmp.player.currentExtenstion === undefined) {
+
+                  FlurryAgent.logEvent('format_not_supported', {currentExtension: dmp.player.currentExtenstion,
+                                                                currentMime: dmp.player.currentMime});
+                } else {
+                  FlurryAgent.logEvent('format_not_supported', {currentExtension: dmp.player.currentExtenstion,
+                                                                currentMime: dmp.player.currentMime,
+                                                                flash: dmp.player.flash,
+                                                                browser: navigator.browserInfo.browser});
+                }
+              }
+            } catch (e) {}
         }
       },
       ready: function() {
@@ -269,6 +286,15 @@ dmp.player.playFile = function(songId, stop, tracktime) {
                 ga('send', 'event', 'player', 'play', fileExtension);
               }
             }
+            if (typeof FlurryAgent !== 'undefined' ) {
+              if (dmp.player.currentlyLoaded == fileUrl) {
+                FlurryAgent.logEvent('replay_song');
+              } else if (!fileExtension) {
+                FlurryAgent.logEvent('play_song', {mime: mimeType});
+              } else {
+                FlurryAgent.logEvent('play_song', {fileExtension: fileExtension});
+              }
+            }
 
             setMediaValue[fileExtension] = fileUrl;
             dmp.player.currentlyLoaded = fileUrl;
@@ -299,6 +325,9 @@ $(document).keydown(function(e){
       if(ga) {
           ga('send', 'event', 'player', 'next_key');
       }
+      if (typeof FlurryAgent !== 'undefined' ) {
+          FlurryAgent.logEvent('next_key_pressed');
+      }
     dmp.player.playNext(e);
     return false;
   }
@@ -306,6 +335,9 @@ $(document).keydown(function(e){
   if (e.keyCode == 37) {
       if(ga) {
           ga('send', 'event', 'player', 'previous_key');
+      }
+      if (typeof FlurryAgent !== 'undefined' ) {
+          FlurryAgent.logEvent('previous_key_pressed');
       }
     dmp.player.playPrevious(e);
     return false;
