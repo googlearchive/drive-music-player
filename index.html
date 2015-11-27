@@ -171,7 +171,7 @@
           </tfoot>
         </table>
         <div id="buttonBar">
-          <div class="add song" target="_blank" onclick="dmp.ui.picker.setVisible(true);">
+          <div class="add song" target="_blank" onclick="if(dmp.ui.picker){dmp.ui.picker.setVisible(true);} else {alert('Error: User not yet signed-in.')}">
             <img src='/images/driveLogo.png'>
             Add audio files from Google Drive
           </div>

@@ -108,6 +108,7 @@ dmp.auth.periodicCheckAuth = function(callback) {
     // First we extract the access token from the hash portion of the URL.
     dmp.auth.accessToken = dmp.url.getHashParameter("access_token");
     dmp.auth.accessTokenExpieryTimestamp = new Date().getTime() + parseInt(dmp.url.getHashParameter("expires_in")) * 1000;
+    dmp.ui.buildPicker(); // Rebuilding the Picker since it depends on the access token
     // TODO: handle auth errors here
     console.log("Found an access token: " + dmp.auth.accessToken);
     // Start the autorefresh chron job. Check every 60sec if the token is valid.
@@ -157,7 +158,6 @@ dmp.auth.fetchUserId = function(callback) {
       } else {
         console.log("Got the UserId: " + resp.id);
         dmp.auth.userId = resp.id;
-        dmp.ui.buildPicker(); // Rebuilding the Picker since it depends on the User ID.
         if (callback) {
           callback();
         }
@@ -201,6 +201,7 @@ dmp.auth.autoRefreshAuth = function(callback) {
       // Saves the new access token.
       dmp.auth.accessToken = authResult.access_token;
       dmp.auth.accessTokenExpieryTimestamp = currentTimestamp + authResult.expires_in * 1000;
+      dmp.ui.buildPicker(); // Rebuilding the Picker since it depends on the access token
     }
     // calling potential Callback.
     if (callback) {
