@@ -59,7 +59,7 @@ dmp.lastfm.getAlbumCover = function(title, artist, callback) {
 dmp.lastfm.fetchData = function(title, artist, callback) {
   title = title ? title : "";
   artist = artist ? artist : "";
-  var url = "http://ws.audioscrobbler.com/2.0/?method=track.search&track="
+  var url = "//ws.audioscrobbler.com/2.0/?method=track.search&track="
       + encodeURIComponent(title.trim()) + "&artist="
       + encodeURIComponent(artist.trim()) + "&api_key="
       + dmp.lastfm.LASTFM_API_KEY + "&format=json&limit=1";
