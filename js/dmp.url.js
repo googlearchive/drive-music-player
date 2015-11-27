@@ -49,10 +49,10 @@ dmp.url.getHashParameter = function(name) {
 dmp.url.getFileIdsFromStateParam = function() {
   var stateParamObj = dmp.url.stringToObject(dmp.url.getHashParameter("state"));
   if (stateParamObj && stateParamObj.ids) {
-    console.log("Extracted the file IDs: " + stateParamObj.ids);
+    console.log("Extracted the file IDs: ", stateParamObj.ids);
     return stateParamObj.ids;
   } else {
-    console.log("Extracted the file IDs: " + []);
+    console.log("Extracted the file IDs: ", []);
     return [];
   }
 };
@@ -65,7 +65,7 @@ dmp.url.getFileIdsFromStateParam = function() {
 dmp.url.getUserIdFromStateParam = function() {
     var stateParamObj = dmp.url.stringToObject(dmp.url.getHashParameter("state"));
     if (stateParamObj && stateParamObj.userId) {
-        console.log("Extracted the User ID: " + stateParamObj.userId);
+        console.log("Extracted the User ID: ", stateParamObj.userId);
         return stateParamObj.userId;
     } else {
         console.log("No user ID found.");

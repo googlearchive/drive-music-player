@@ -50,8 +50,7 @@ dmp.drive.listFiles = function(folderId, callback, retryCounter, items, folders)
     gapi.client.drive.files.list({'q': "'"+folderId+"' in parents and trashed=false",'fields':'items(id, mimeType)'}).execute(function(resp){
       // We got an error object back so we can check it out.
       if (resp && resp.error) {
-        console.log("Error while listing files: "
-            + resp.error.message);
+        console.log("Error while listing files: ", resp.error);
         // If the issue is that auth has expired we refresh and retry.
         if (resp.error.code == 401
             && resp.error.data[0].reason == "authError"
@@ -134,10 +133,11 @@ dmp.drive.getFileUrl = function(fileId, callback, retryCounter) {
         }
       // We have a good response
       } else if (resp && resp.title) {
-        console.log("Got the File's URL: " + resp.downloadUrl);
+        console.log("Got the File's URL: ", resp.downloadUrl);
         var authedCallbackUrl = resp.downloadUrl + "&access_token="
             + encodeURIComponent(dmp.auth.accessToken);
-        console.log("File's URL w/ auth: " + authedCallbackUrl);
+        console.log("File's URL w/ auth: ", authedCallbackUrl);
+        console.log("File's Data: ", resp);
         callback(authedCallbackUrl,
             resp.title,
             null,
@@ -168,7 +168,7 @@ dmp.drive.aboutGet = function(callback, retryCounter) {
     gapi.client.drive.about.get({'fields': "user/emailAddress"}).execute(function(resp){
       // We got an error object back so we can check it out.
       if (resp && resp.error) {
-        console.log("Error while fetching about: " + resp.error.message);
+        console.log("Error while fetching about: ", resp.error);
         // If the issue is that auth has expired we refresh and retry.
         if (resp.error.code == 401
             && resp.error.data[0].reason == "authError"
@@ -185,7 +185,7 @@ dmp.drive.aboutGet = function(callback, retryCounter) {
         }
       // We have a good response
       } else if (resp && resp.user) {
-        console.log("Got user: " + JSON.stringify(resp.user));
+        console.log("Got user: ", resp.user);
         callback(resp.user, null);
       // The return object has no user, maybe it's an error so we retry.
       } else if (!retryCounter || retryCounter == 0){
