@@ -74,6 +74,9 @@ dmp.lastfm.fetchData = function(title, artist, callback) {
       if (data.results && data.results.trackmatches && data.results.trackmatches.track &&
           data.results.trackmatches.track[0] && data.results.trackmatches.track[0].image) {
         albumUrl = data.results.trackmatches.track[0].image[1]["#text"];
+        if (albumUrl) {
+          albumUrl = albumUrl.replace("http://", "//");
+        }
       }
       console.log("Found album cover for ", title, " using LastFM API: ", albumUrl);
       if (callback) {
