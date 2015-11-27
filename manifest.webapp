@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0",
+  "name" : "Music Player for Google Drive",
+  "launch_path": "/",
+  "description" : "Music and Audio files player for Google Drive.",
+  "icons": {
+    "128": "/images/icon_128.png"
+  },
+  "developer": {
+    "name": "Nicolas Garnier",
+    "url": "https://github.com/nicolasgarnier"
+  },
+  "installs_allowed_from": [
+    "*"
+  ],
+  "default_locale": "en",
+  "permissions": {
+  },
+  "locales": {
+    "en": {
+      "name" : "Music Player for Google Drive",
+      "description" : "Music and Audio files player for Google Drive.",
+    }
+  }
+}

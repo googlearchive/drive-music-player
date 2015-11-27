@@ -1,0 +1,15 @@
+{
+  "name" : "Music Player for Google Drive",
+  "description" : "Music and Audio files player for Google Drive.",
+  "short_name": "DrivePlayer",
+  "icons": [{
+    "src": "images/icon_128.png",
+    "sizes": "128x128",
+    "type": "image/png"
+  }],
+  "start_url": "/",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "theme_color": "#555",
+  "background_color": "#555"
+}
