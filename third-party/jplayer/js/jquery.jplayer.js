@@ -2666,7 +2666,11 @@
 			// This command should be removed and actually causes minor undesirable effects on some browsers. Such as loading the whole file and not only the metadata.
 			if(this.status.waitForLoad) {
 				this.status.waitForLoad = false;
-				this.htmlElement.media.load();
+				try {
+					this.htmlElement.media.load();
+				} catch(e) {
+					 // No op.
+				}
 			}
 			clearTimeout(this.internal.htmlDlyCmdId);
 		},
