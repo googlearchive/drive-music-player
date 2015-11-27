@@ -21,6 +21,24 @@ dmp.lastfm = dmp.lastfm || {};
 /** The Key for the lastFM API. */
 dmp.lastfm.LASTFM_API_KEY = "17c11c0b6f517f57b31d3bb701730a25";
 
+// Lets pool the requests to the Last FM API to avoid users loading tons of file to kill the app quota.
+dmp.lastfm.pool = [];
+dmp.lastfm.poolCounter = 0;
+dmp.lastfm.poolWaitTime = 1000;
+
+dmp.lastfm.poolNext = function() {
+  if (dmp.lastfm.pool.length > 0) {
+    var songData = dmp.lastfm.pool.pop();
+    dmp.lastfm.poolCounter++;
+    var poolCallBack = function(coverUrl) {
+      dmp.lastfm.poolCounter--;
+      setTimeout(dmp.lastfm.poolNext, dmp.lastfm.poolWaitTime);
+      songData.callback(coverUrl);
+    };
+    dmp.lastfm.fetchData(songData.title, songData.artist, poolCallBack);
+  }
+};
+
 /**
  * Fetches the Song's cover from the Last.fm API and pass the URL of the song
  * cover to the callback.
@@ -31,23 +49,31 @@ dmp.lastfm.LASTFM_API_KEY = "17c11c0b6f517f57b31d3bb701730a25";
  *                           URL of the album cover.
  */
 dmp.lastfm.getAlbumCover = function(title, artist, callback) {
+  dmp.lastfm.pool.push({title: title, artist: artist, callback: callback});
+  if (dmp.lastfm.poolCounter == 0) {
+    dmp.lastfm.poolNext();
+  }
+};
+
+
+dmp.lastfm.fetchData = function(title, artist, callback) {
   var url = "http://ws.audioscrobbler.com/2.0/?method=track.search&track="
-      + encodeURIComponent(title) + "&artist="
-      + encodeURIComponent(artist) + "&api_key="
+      + encodeURIComponent(title.trim()) + "&artist="
+      + encodeURIComponent(artist.trim()) + "&api_key="
       + dmp.lastfm.LASTFM_API_KEY + "&format=json&limit=1";
+  console.log("Getting info using LastFM API: ", url);
   $.ajax({
     url: url,
     dataType: "json",
     tryCount : 0,
     retryLimit : 2,
-    success: function(data){
-      albumUrl = null;
-      if (data.results
-          && parseInt(data.results["opensearch:totalResults"]) > 0) {
-        if (data.results.trackmatches.track.image) {
-          albumUrl = data.results.trackmatches.track.image[1]["#text"];
-        }
+    success: function(data) {
+      var albumUrl = null;
+      if (data.results && data.results.trackmatches && data.results.trackmatches.track &&
+          data.results.trackmatches.track[0] && data.results.trackmatches.track[0].image) {
+        albumUrl = data.results.trackmatches.track[0].image[1]["#text"];
       }
+      console.log("Found album cover for ", title, " using LastFM API: ", albumUrl);
       if (callback) {
         callback(albumUrl);
       }

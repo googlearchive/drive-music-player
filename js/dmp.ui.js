@@ -170,9 +170,14 @@ dmp.ui.createSongEntry = function(fileInfo, callback) {
         dmp.drive.readTagsFromProperty(fileInfo.id, function(title, artist, savedMd5, albumCoverUrl){
           if (savedMd5 && savedMd5 == md5) {
             if (!thumbnailUrl) {
-              thumbnailUrl = albumCoverUrl;
+              // Since Last FM album RULs can rotate we need to re-query each time.
+              dmp.ui.displayID3Tags(fileInfo.id, title, artist, fileName, null);
+              dmp.lastfm.getAlbumCover(title, artist, function(albumUrl) {
+                dmp.ui.displayID3Tags(fileInfo.id, title, artist, fileName, albumUrl);
+              });
+            } else {
+              dmp.ui.displayID3Tags(fileInfo.id, title, artist, fileName, thumbnailUrl);
             }
-            dmp.ui.displayID3Tags(fileInfo.id, title, artist, fileName, thumbnailUrl);
             dmp.playlist.addMetadataToSong(fileInfo.id, title, artist, md5);
           } else {
             // This will extract the tags from the actual file which is quite bandwith heavy (downloads 400KB) which is why we try to avoid it above by caching.
