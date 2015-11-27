@@ -154,7 +154,7 @@ dmp.player.playNext = function(e, fromError) {
 
   var nextSongInfo = dmp.playlist.getAudioList()[playingIndex];
   if (nextSongInfo) {
-    console.log("Now playing song: " + nextSongInfo);
+    console.log("Now playing song: " + JSON.stringify(nextSongInfo));
     dmp.player.playFile(nextSongInfo.id, shouldStopAtTheEnd);
   } else {
     dmp.playlist.setCurrentSongId("");

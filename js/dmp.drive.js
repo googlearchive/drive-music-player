@@ -185,7 +185,7 @@ dmp.drive.aboutGet = function(callback, retryCounter) {
         }
       // We have a good response
       } else if (resp && resp.user) {
-        console.log("Got user: " + resp.user);
+        console.log("Got user: " + JSON.stringify(resp.user));
         callback(resp.user, null);
       // The return object has no user, maybe it's an error so we retry.
       } else if (!retryCounter || retryCounter == 0){
