@@ -103,7 +103,7 @@ dmp.url.makePrettyUrl = function() {
   } else if (dmp.playlist.audioList.length > 0) {
     var audioList = dmp.playlist.getAudioList();
     var ids = [];
-    for (var index in audioList) {
+    for (var index = 0; index < audioList.length; index++) {
       ids.push(audioList[index].id);
     }
     hashParams.push("fileIds=" + ids.join(','));
