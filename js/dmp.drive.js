@@ -108,7 +108,7 @@ dmp.drive.listFiles = function(folderId, callback, retryCounter, items, folders)
  */
 dmp.drive.getFileUrl = function(fileId, callback, retryCounter) {
   gapi.client.load('drive', 'v2', function() {
-    var accessTokenObj = new Object();
+    var accessTokenObj = {};
     accessTokenObj.access_token = dmp.auth.accessToken;
     accessTokenObj.token_type = "Bearer";
     accessTokenObj.expires_in = "3600";
@@ -160,7 +160,7 @@ dmp.drive.getFileUrl = function(fileId, callback, retryCounter) {
 
 dmp.drive.aboutGet = function(callback, retryCounter) {
   gapi.client.load('drive', 'v2', function() {
-    var accessTokenObj = new Object();
+    var accessTokenObj = {};
     accessTokenObj.access_token = dmp.auth.accessToken;
     accessTokenObj.token_type = "Bearer";
     accessTokenObj.expires_in = "3600";
@@ -198,12 +198,12 @@ dmp.drive.aboutGet = function(callback, retryCounter) {
   });
 };
 
-// WILL NOT WORK IF CROSS ORIGIN IS NOT ENABLED ON THE UMAGE URL.
+// WILL NOT WORK IF CROSS ORIGIN IS NOT ENABLED ON THE IMAGE URL.
 dmp.drive.uploadThumbnailFromUrl = function(fileId, albumUrl) {
 
   // Saving Thumb URL to properties because it can't be saved as base 64 due to XHR issues.
   gapi.client.load('drive', 'v2', function() {
-    var accessTokenObj = new Object();
+    var accessTokenObj = {};
     accessTokenObj.access_token = dmp.auth.accessToken;
     accessTokenObj.token_type = "Bearer";
     accessTokenObj.expires_in = "3600";
@@ -282,7 +282,7 @@ dmp.drive.base64toBase64Url = function(base64) {
 
 dmp.drive.saveTagsInProperty = function(fileId, title, artist, md5) {
   gapi.client.load('drive', 'v2', function() {
-    var accessTokenObj = new Object();
+    var accessTokenObj = {};
     accessTokenObj.access_token = dmp.auth.accessToken;
     accessTokenObj.token_type = "Bearer";
     accessTokenObj.expires_in = "3600";

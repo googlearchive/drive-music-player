@@ -57,13 +57,11 @@ dmp.lastfm.getAlbumCover = function(title, artist, callback) {
       if (this.tryCount <= this.retryLimit) {
           //try again
           $.ajax(this);
-          return;
       } else {
         if (callback) {
           callback(null);
         }
       }
-      return;
     }
   });
 };

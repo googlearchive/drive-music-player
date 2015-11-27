@@ -25,7 +25,7 @@ dmp.url = dmp.url || {};
  */
 dmp.url.getUrlParameter = function(name) {
   var params = location.search;
-  var param = (RegExp(name + '=' + '(.+?)(&|$)').exec(params)||[,null])[1];
+  var param = (new RegExp(name + '=' + '(.+?)(&|$)').exec(params)||[,null])[1];
   return (param ? decodeURIComponent(param) : param);
 };
 
@@ -37,7 +37,7 @@ dmp.url.getUrlParameter = function(name) {
 dmp.url.getHashParameter = function(name) {
   var hash = window.location.hash;
   hash = hash.indexOf("#") == 0 ? hash.substr(1) : hash;
-  var param = (RegExp(name + '=' + '(.+?)(&|$)').exec(hash)||[,null])[1];
+  var param = (new RegExp(name + '=' + '(.+?)(&|$)').exec(hash)||[,null])[1];
   return (param ? decodeURIComponent(param) : param);
 };
 
@@ -83,8 +83,7 @@ dmp.url.getUserIdFromStateParam = function() {
  */
 dmp.url.stringToObject = function(state) {
   try {
-    var stateObj = JSON.parse(state);
-    return stateObj;
+    return JSON.parse(state);
   } catch(e) {
     return undefined;
   }
