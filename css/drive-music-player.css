@@ -76,6 +76,9 @@ a:link:hover {
     margin-bottom: 7px;
     font-weight: bold;
 }
+.help .lastfm {
+  margin-top: 20px;
+}
 .help .material-icons {
     font-size: 12px;
 }
@@ -635,5 +638,12 @@ div.jp-audio div.jp-type-single div.jp-progress {
     div.jp-audio div.jp-type-single .jp-volume-max,
     div.jp-audio div.jp-type-single .jp-volume-bar{
         display:none !important;
+    }
+    .picker, .picker-frame {
+      width: 100% !important;
+      height: 100% !important;
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
     }
 }
