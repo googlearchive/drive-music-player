@@ -39,8 +39,7 @@ dmp.testUser = false;
  * First initiates authorization and then starts the audio player.
  */
 dmp.init = function() {
-  $(document).ready(function () {
-
+  document.addEventListener("DOMContentLoaded", function() {
     // If Flash is not installed and the HTML5 Player cannot be sued we display a message asking to install Flash.
     if (!dmp.ui.detectFlash() && !dmp.player.html5PlayerIsWorking()) {
       $('#flashAlert').show();
