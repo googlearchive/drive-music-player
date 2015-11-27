@@ -342,7 +342,6 @@ dmp.ui.displayID3Tags = function(fileId, title, artist, fileName, albumCoverUrl)
   // remove possible error styling applied to the
     $(".artist", $("#file-" + fileId)).removeClass("error").removeAttr("colspan")
         .removeAttr("title");
-    $(".title", $("#file-" + fileId)).removeClass("hide");
 
   if (artist && title) {
     $(".artist", $("#file-" + fileId)).text(artist);
@@ -352,7 +351,7 @@ dmp.ui.displayID3Tags = function(fileId, title, artist, fileName, albumCoverUrl)
     }
   } else {
     $(".artist", $("#file-" + fileId)).text(fileName).addClass("noID3tags").attr("colspan", "2");
-    $(".title", $("#file-" + fileId)).addClass("hide");
+    $(".title", $("#file-" + fileId)).text("");
   }
 };
 

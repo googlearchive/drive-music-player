@@ -346,9 +346,6 @@ a:link:hover {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	width: 524px;
-	min-width: 524px;
-	max-width: 524px;
 }
 #flashAlert {
 	display: none;
