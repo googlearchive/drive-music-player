@@ -77,19 +77,6 @@ dmp.ui.createSongListFromDom = function(event, ui) {
   });
 };
 
-// Compares if 2 jquery elements contains the same elements.
-$.fn.equals = function(compareTo) {
-  if (!compareTo || this.length != compareTo.length) {
-    return false;
-  }
-  for (var i = 0; i < this.length; ++i) {
-    if (this[i] !== compareTo[i]) {
-      return false;
-    }
-  }
-  return true;
-};
-
 /**
  * Creates a new File Entry in the playlist.
  *
