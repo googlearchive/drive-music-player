@@ -83,6 +83,7 @@ dmp.init = function() {
   });
 };
 
+// Adds plugins to jquery.
 dmp.addJqueryPlugins = function() {
   // JQuery plugin to compares if 2 jquery elements contains the same elements.
   $.fn.equals = function(compareTo) {
@@ -97,6 +98,12 @@ dmp.addJqueryPlugins = function() {
     return true;
   };
 };
+
+// Polyfills
+
+if (!window.console) {
+  console = {log: function() {}};
+}
 
 navigator.browserInfo = (function(){
     var ua= navigator.userAgent, tem,

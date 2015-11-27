@@ -26,8 +26,38 @@
       }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href='//fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="icon" type="image/png" href="/images/icon.png" />
+    <title>Music Player for Google Drive</title>
+    <meta name="description" content="Music Player for Google Drive is a simple and lightweight online music player for your audio files stored in Google Drive. It lets you open music files directly from Google Drive or from its own interface. Music Player for Google Drive offers: Playback of MP3 files, MP4, OGG (Audio), WAV, ACC (iTune's .m4a files), webm (Audio). - Support for ID3 tags v1 and v2as well as AAC file Tags. - Automatic display of Album covers. - Handles users signed-in multiple Google account elegantly. - Open Audio files directly from the Google Drive UI." />
+
+    <!-- Disable tap highlight on IE -->
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <!-- Web Application Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Music Player for Google Drive">
+    <meta name="theme-color" content="#555">
+    <link rel="icon" sizes="128x128" href="images/icon_128.png">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Music Player for Google Drive">
+    <link rel="apple-touch-icon" href="images/icon_128.png">
+    <link rel="apple-touch-icon-precomposed" href="images/icon_128.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#555">
+
+    <!-- Tile icon for Win8 -->
+    <meta name="msapplication-TileImage" content="images/icon_128.png">
+    <meta name="msapplication-TileColor" content="#555">
+    <meta name="msapplication-navbutton-color" content="#555">
+
+    <!-- Google Analytics -->
     <script type="text/javascript">
       try {
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -51,21 +81,24 @@
           }
       };
     </script>
-    <meta http-equiv="X-UA-Compatible" content="IE=9">
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <link rel="icon" type="image/png" href="/images/icon.png" />
-    <title>Music Player for Google Drive</title>
+
     <!--[if lt IE 9]>
       <script type="text/javascript">
         // Fix a bug in IE 8 and below where changing the hash after a redirect from containing a hash causes the page to reload.
         window.location.hash = window.location.hash;
       </script>
     <![endif]-->
-    <script type="text/javascript"> if (!window.console) console = {log: function() {}}; </script>
-    <meta name="description" content="Music Player for Google Drive is a simple and lightweight online music player for your audio files stored in Google Drive. It lets you open music files directly from Google Drive or from its own interface. Music Player for Google Drive offers: Playback of MP3 files, MP4, OGG (Audio), WAV, ACC (iTune's .m4a files), webm (Audio). - Support for ID3 tags v1 and v2as well as AAC file Tags. - Automatic display of Album covers. - Handles users signed-in multiple Google account elegantly. - Open Audio files directly from the Google Drive UI." />
-    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/jquery-ui.css" />
+
+    <!-- Fonts -->
+    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='//fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+
+    <!-- Stylesheets -->
+    <link type="text/css" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/jquery-ui.css" rel="stylesheet" />
     <link type="text/css" href="third-party/jplayer/skin/jplayer.blue.monday.css" rel="stylesheet" />
     <link type="text/css" href="css/drive-music-player.css" rel="stylesheet" />
+
+    <!-- Scripts -->
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
     <script type="text/javascript" src="third-party/swfobject/swfobject.js"></script>
@@ -200,7 +233,7 @@
         <div class="tip">Drag & Drop to re-order songs.</div>
         <div class="tip"><i class="material-icons">&#xE03B;</i>: Saves the current song selection in a new playlist file in your Drive.</div>
         <div class="tip">Playlists save automatically! No need for a save button.</div>
-      <div class="small-title">Some album covers are displayed using the <a href="http://www.last.fm">LastFM</a> <a href="http://www.last.fm/api/">API</a>.</div>
+      <div class="lastfm tip">Some album covers are displayed using the <a href="http://www.last.fm">LastFM</a> <a href="http://www.last.fm/api/">API</a>.</div>
     </div>
     <div id="footer">
         <span onclick="window.scrollTo(0, 9999999999999);var classes = document.getElementById('help').classList;classes.remove('highlighted');classes.add('highlight');setInterval(function () {classes.add('highlighted')}, 1)"><i class="material-icons">&#xE887;</i> Help</span>

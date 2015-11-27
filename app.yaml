@@ -1,5 +1,5 @@
 application: drive-music-player
-version: new-design-june-2015
+version: nov-2015
 runtime: python27
 api_version: 1
 threadsafe: yes
@@ -31,3 +31,11 @@ handlers:
 
 - url: /css
   static_dir: css
+
+- url: /manifest.json
+  static_files: manifest.json
+  upload: manifest.json
+
+- url: /manifest.webapp
+  static_files: manifest.webapp
+  upload: manifest.webapp
