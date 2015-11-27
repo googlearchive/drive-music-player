@@ -145,6 +145,8 @@ dmp.player.playNext = function(e, fromError) {
     if (playingIndex == 0 && fromError) {
       $("#jqueryPlayerContainer").jPlayer("clearMedia");
       return;
+    } else if(ga) {
+      ga('send', 'event', 'player', 'replay');
     }
   }
 
@@ -263,9 +265,7 @@ dmp.player.playFile = function(songId, stop, tracktime) {
             }
 
             if(ga) {
-              if (dmp.player.currentlyLoaded == fileUrl) {
-                ga('send', 'event', 'player', 'replay');
-              } else if(!fileExtension) {
+              if(!fileExtension) {
                 ga('send', 'event', 'player', 'play', "mime: " + mimeType);
               } else {
                 ga('send', 'event', 'player', 'play', fileExtension);
