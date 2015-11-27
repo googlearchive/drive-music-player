@@ -359,14 +359,16 @@ dmp.drive.readTagsFromProperty = function(fileId, callback) {
         var md5 = null;
         var coverUrl = null;
         for(var index in resp.items) {
-          if (resp.items[index].key == "md5") {
-            md5 = resp.items[index].value;
-          } else if (resp.items[index].key == "songTitle") {
-            title = resp.items[index].value;
-          } else if (resp.items[index].key == "songArtist") {
-            artist = resp.items[index].value;
-          } else if (resp.items[index].key == "albumCoverUrl") {
-            coverUrl = resp.items[index].value;
+          if (resp.items[index] && resp.items[index].key) {
+            if (resp.items[index].key == "md5") {
+              md5 = resp.items[index].value;
+            } else if (resp.items[index].key == "songTitle") {
+              title = resp.items[index].value;
+            } else if (resp.items[index].key == "songArtist") {
+              artist = resp.items[index].value;
+            } else if (resp.items[index].key == "albumCoverUrl") {
+              coverUrl = resp.items[index].value;
+            }
           }
         }
         callback(title, artist, md5, coverUrl);
