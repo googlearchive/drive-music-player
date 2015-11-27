@@ -98,3 +98,10 @@ navigator.browserInfo = (function(){
     if((tem= ua.match(/version\/(\d+)/i))!= null) M.splice(1, 1, tem[1]);
     return { browser: M[0], version: M[1] };
 })();
+
+// String#trim() polyfill
+if (!String.prototype.trim) {
+  String.prototype.trim = function () {
+    return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+  };
+}
