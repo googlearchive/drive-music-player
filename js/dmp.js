@@ -39,36 +39,39 @@ dmp.testUser = false;
  * First initiates authorization and then starts the audio player.
  */
 dmp.init = function() {
-  // If Flash is not installed and the HTML5 Player cannot be sued we display a message asking to install Flash.
-  if (!dmp.ui.detectFlash() && !dmp.player.html5PlayerIsWorking()) {
-    $('#flashAlert').show();
-    return;
-  }
-  // First make sure we are authorized to access the Drive API.
-  dmp.auth.initAuth(function() {
-    dmp.drive.aboutGet(function(user, error) {
-      if (error) {
-        console.log("about error: " + error);
-        dmp.testUser = false;
-      } else {
-        dmp.testUser = user.emailAddress.indexOf("@google.com") != -1;
-        console.log("isTestUser: " + dmp.testUser);
-      }
-      // Extracting all the file IDs to play.
-      var fileIds = dmp.url.getFileIdsFromStateParam();
-      for (var index = 0; index < fileIds.length; index++) {
-        dmp.playlist.audioList.push({id: fileIds[index]});
-      }
-      // Makes a pretty URL from the current playlist.
-      dmp.url.makePrettyUrl();
-      // Hide/show the empty playlist message depending songs are selected.
-      dmp.ui.toggleEmptyPlaylist();
-      // Builds a picker object.
-      dmp.ui.buildPicker();
-      // Create an entry for each songs.
-      dmp.ui.createSongEntries();
-      // Now we can initialize the Player and play some audio files.
-      dmp.player.initPlayer();
+  $(document).ready(function () {
+
+    // If Flash is not installed and the HTML5 Player cannot be sued we display a message asking to install Flash.
+    if (!dmp.ui.detectFlash() && !dmp.player.html5PlayerIsWorking()) {
+      $('#flashAlert').show();
+      return;
+    }
+    // First make sure we are authorized to access the Drive API.
+    dmp.auth.initAuth(function () {
+      dmp.drive.aboutGet(function (user, error) {
+        if (error) {
+          console.log("about error: " + error);
+          dmp.testUser = false;
+        } else {
+          dmp.testUser = user.emailAddress.indexOf("@google.com") != -1;
+          console.log("isTestUser: " + dmp.testUser);
+        }
+        // Extracting all the file IDs to play.
+        var fileIds = dmp.url.getFileIdsFromStateParam();
+        for (var index = 0; index < fileIds.length; index++) {
+          dmp.playlist.audioList.push({id: fileIds[index]});
+        }
+        // Makes a pretty URL from the current playlist.
+        dmp.url.makePrettyUrl();
+        // Hide/show the empty playlist message depending songs are selected.
+        dmp.ui.toggleEmptyPlaylist();
+        // Builds a picker object.
+        dmp.ui.buildPicker();
+        // Create an entry for each songs.
+        dmp.ui.createSongEntries();
+        // Now we can initialize the Player and play some audio files.
+        dmp.player.initPlayer();
+      });
     });
   });
 };
