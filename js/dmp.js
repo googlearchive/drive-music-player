@@ -47,15 +47,17 @@ dmp.init = function() {
   // First make sure we are authorized to access the Drive API.
   dmp.auth.initAuth(function() {
     dmp.drive.aboutGet(function(user, error) {
-      console.log("about error: " + error);
-      if (error == null) {
-        dmp.testUser = error == null && user.emailAddress.indexOf("@google.com") != -1;
-        console.log("testUser: " + dmp.testUser);
+      if (error) {
+        console.log("about error: " + error);
+        dmp.testUser = false;
+      } else {
+        dmp.testUser = user.emailAddress.indexOf("@google.com") != -1;
+        console.log("isTestUser: " + dmp.testUser);
       }
       // Extracting all the file IDs to play.
       var fileIds = dmp.url.getFileIdsFromStateParam();
-      for (index in fileIds) {
-        dmp.playlist.audioList.push({id:fileIds[index]});
+      for (var index = 0; index < fileIds.length; index++) {
+        dmp.playlist.audioList.push({id: fileIds[index]});
       }
       // Makes a pretty URL from the current playlist.
       dmp.url.makePrettyUrl();
