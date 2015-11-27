@@ -71,9 +71,6 @@ dmp.playlist.createNewPlaylist = function() {
     if(ga) {
         ga('send', 'event', 'playlist', 'create');
     }
-    if (typeof FlurryAgent !== 'undefined' ) {
-      FlurryAgent('send', 'event', 'playlist', 'create');
-    }
 };
 
 
@@ -91,9 +88,6 @@ dmp.playlist.loadPlaylist = function(file) {
     if (ga) {
         ga('send', 'event', 'playlist', 'load');
     }
-    if (typeof FlurryAgent !== 'undefined' ) {
-        FlurryAgent('send', 'event', 'playlist', 'load');
-    }
 };
 
 
@@ -109,9 +103,6 @@ dmp.playlist.handleErrors = function(e) {
       if(ga) {
           ga('send', 'event', 'playlist', 'unknown_error',
               e.type + " - " + e.message + " - isFatal:" + e.isFatal);
-      }
-      if (typeof FlurryAgent !== 'undefined' ) {
-          FlurryAgent.logEvent('playlist_error', {type: e.type, isFatal: e.isFatal});
       }
       if (e.isFatal) {
           window.setTimeout(location.reload, 500);
@@ -185,9 +176,6 @@ dmp.playlist.renamePlaylistFromInput = function() {
     if(ga) {
         ga('send', 'event', 'playlist', 'rename');
     }
-    if (typeof FlurryAgent !== 'undefined' ) {
-      FlurryAgent.logEvent('playlist_rename');
-    }
 };
 
 /**
@@ -205,9 +193,6 @@ dmp.playlist.closePlaylist = function() {
 
     if(ga) {
         ga('send', 'event', 'playlist', 'close');
-    }
-    if (typeof FlurryAgent !== 'undefined' ) {
-      FlurryAgent.logEvent('playlist_close');
     }
 };
 
