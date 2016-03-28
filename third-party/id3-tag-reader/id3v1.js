@@ -3,8 +3,8 @@
  * Copyright (c) 2008 Jacob Seidelin, cupboy@gmail.com, http://blog.nihilogic.dk/
  * MIT License [http://www.opensource.org/licenses/mit-license.php]
  *
- * Extended by Antonio Afonso (antonio.afonso@opera.com), Opera Software ASA
- * Modified by Antonio Afonso (antonio.afonso@gmail.com)
+ * Extended by António Afonso (antonio.afonso@opera.com), Opera Software ASA
+ * Modified by António Afonso (antonio.afonso@gmail.com)
  * Modified by Nicolas Garnier (nivco.las@gmail.com)
  */
 
