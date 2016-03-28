@@ -1,3 +1,4 @@
-This folder contains the core JS source code files.
+Javascript Source code
+======================
 
-The project's custom code is in the files named `dmp.*.js`
+This folder contains the Google licensed core JS source code of the Music Player for Google Drive.
