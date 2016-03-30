@@ -142,7 +142,7 @@ dmp.ui.createSongEntry = function(fileInfo, callback) {
           if(ga) {
               ga('send', 'event', 'player', 'not_authorized');
           }
-        $(".title", $("#file-" + fileInfo.id)).remove();
+        $(".title", $("#file-" + fileInfo.id)).hide();
       } else if (error) {
         $(".artist", $("#file-" + fileInfo.id))
             .text("There was an error reading the file: " + error.message)
@@ -150,7 +150,7 @@ dmp.ui.createSongEntry = function(fileInfo, callback) {
           if(ga) {
               ga('send', 'event', 'error', 'error_reading_file', error.message);
           }
-        $(".title", $("#file-" + fileInfo.id)).remove();
+        $(".title", $("#file-" + fileInfo.id)).hide();
       } else if (fileInfo.md5 && fileInfo.md5 == md5) { // If we already have all the tags cached in the playlist we display them right away.
         dmp.ui.displayID3Tags(fileInfo.id, fileInfo.title, fileInfo.artist, fileName, thumbnailUrl);
       } else if (fileUrl) { // No tags cached in the playlist we'll extract them from the file.
@@ -345,13 +345,13 @@ dmp.ui.displayID3Tags = function(fileId, title, artist, fileName, albumCoverUrl)
 
   if (artist && title) {
     $(".artist", $("#file-" + fileId)).text(artist);
-    $(".title", $("#file-" + fileId)).text(title);
+    $(".title", $("#file-" + fileId)).text(title).show();
     if (albumCoverUrl) {
       $("#file-" + fileId).css("background-image", "url(" + albumCoverUrl + ")");
     }
   } else {
     $(".artist", $("#file-" + fileId)).text(fileName).addClass("noID3tags").attr("colspan", "2");
-    $(".title", $("#file-" + fileId)).text("");
+    $(".title", $("#file-" + fileId)).hide();
   }
 };
 

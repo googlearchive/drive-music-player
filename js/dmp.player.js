@@ -73,7 +73,7 @@ dmp.player.initPlayer = function(){
                 .addClass("error").attr("colspan", "2")
                 .attr("title", "Your browser might not support this audio format." +
                     (dmp.player.hasFlash ? "" : " Try installing Flash."));
-              $(".title", $("#file-" + dmp.playlist.getCurrentSongId())).text("");
+              $(".title", $("#file-" + dmp.playlist.getCurrentSongId())).hide();
 
               // Tracking errors in GA.
               if(ga && dmp.player.currentMime.indexOf(dmp.playlist.PLAYLIST_MIME_TYPE) === -1 &&

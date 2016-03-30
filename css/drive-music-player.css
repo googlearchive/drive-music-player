@@ -298,11 +298,12 @@ a:link:hover {
 	color: #444;
 	letter-spacing: 1px;
 }
-
 .error {
-	font-weight: normal !important;
-	font-style: italic;
-	font-size: 12px;
+    font-weight: normal !important;
+    font-style: italic;
+    font-size: 12px;
+}
+.error, .noID3tags {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
