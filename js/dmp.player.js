@@ -218,6 +218,7 @@ dmp.player.playFile = function(songId, stop, tracktime) {
           $("#file-" + songId).addClass("playing");
           if (dmp.player.currentlyLoaded != fileUrl) {
             var setMediaValue = {};
+            fileExtension = fileExtension.toLowerCase();
             // map some extensions
             var extensionMapping = {
                 "ogg":"oga",
