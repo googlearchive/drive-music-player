@@ -55,7 +55,7 @@ dmp.player.initPlayer = function(){
   // Initialize the Player.
   $("#jqueryPlayerContainer").jPlayer({
       ended: dmp.player.playNext,
-      swfPath: "/js",
+      swfPath: "/third-party/jplayer/js",
       errorAlerts: false,
       solution: solution,
       supplied: "mp3,m4a,wav,oga,webma,fla,flac",
