@@ -29,7 +29,7 @@ dmp.ui.LOADING_IMAGE_DATA_URI = "data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAA
  * @code{#fileContainer} table.
  */
 dmp.ui.createSongEntries = function() {
-  $('#fileContainer tbody').empty();
+  $('.fileContainer tbody').empty();
   var audioList = dmp.playlist.getAudioList();
   for (index in audioList) {
     if (audioList[index]) {
@@ -37,12 +37,12 @@ dmp.ui.createSongEntries = function() {
     }
   }
   // Makes the song's UI elements sortable by dragging them.
-  $("#fileContainer tbody").sortable({
+  $(".fileContainer tbody").sortable({
     helper : 'clone',
     axis: 'y',
     cursor: 'move',
     zIndex: 9999,
-    containment: $('#fileContainer'),
+    containment: $('.fileContainer tbody'),
     update: dmp.ui.createSongListFromDom,
     opacity: 0.7,
     sort: function(event, ui) {
@@ -87,7 +87,9 @@ dmp.ui.createSongEntry = function(fileInfo, callback) {
   // Create the empty container with loading icon for the file.
   var entryContainer = $("<tr>").attr('id','file-' + fileInfo.id).addClass('song').click(function(){dmp.player.playFile(fileInfo.id);});
   var loadingImg = $('<img>').attr('src', dmp.ui.LOADING_IMAGE_DATA_URI).css("margin-right", "10px");
-  var playindicatorContainer = $('<td>').addClass('playindicator');
+  var coverContainer = $('<td>').addClass('coverCont');
+  var playindicatorContainer = $('<div>').addClass('playindicator');
+  coverContainer.append(playindicatorContainer);
   var moveindicator = $('<td>').addClass('moveindicator').attr('title', 'Re-order / Move');
   var artistContainer = $('<td>').addClass('artist').text("Loading info...").prepend(loadingImg);
   var titleContainer = $('<td>').addClass('title');
@@ -109,8 +111,8 @@ dmp.ui.createSongEntry = function(fileInfo, callback) {
     dmp.url.makePrettyUrl();
     e.stopPropagation();
   });
-  entryContainer.append(playindicatorContainer).append(moveindicator).append(artistContainer).append(titleContainer).append(removeButton);
-  $('#fileContainer tbody').append(entryContainer);
+  entryContainer.append(coverContainer).append(moveindicator).append(artistContainer).append(titleContainer).append(removeButton);
+  $('.fileContainer tbody').append(entryContainer);
 
   // Start fetching the file's URL and title so we can extract ID3 tags.
   dmp.drive.getFileUrl(fileInfo.id, function(fileUrl, fileName, error, fileExtension, isFolder, thumbnailUrl, md5, isPlaylist){
@@ -347,7 +349,7 @@ dmp.ui.displayID3Tags = function(fileId, title, artist, fileName, albumCoverUrl)
     $(".artist", $("#file-" + fileId)).text(artist);
     $(".title", $("#file-" + fileId)).text(title).show();
     if (albumCoverUrl) {
-      $("#file-" + fileId).css("background-image", "url(" + albumCoverUrl + ")");
+      $(".coverCont", $("#file-" + fileId)).css("background-image", "url(" + albumCoverUrl + ")");
     }
   } else {
     $(".artist", $("#file-" + fileId)).text(fileName).addClass("noID3tags").attr("colspan", "2");
