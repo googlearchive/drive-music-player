@@ -19,17 +19,6 @@ var dmp = dmp || {};
 dmp.url = dmp.url || {};
 
 /**
- * Returns the value of the given URL parameter.
- *
- * @return{String} The value of the given URL parameter.
- */
-dmp.url.getUrlParameter = function(name) {
-  var params = location.search;
-  var param = (new RegExp(name + '=' + '(.+?)(&|$)').exec(params)||[,null])[1];
-  return (param ? decodeURIComponent(param) : param);
-};
-
-/**
  * Returns the value of the given Hash parameter.
  *
  * @return{String} The value of the given Hash parameter.
@@ -55,22 +44,6 @@ dmp.url.getFileIdsFromStateParam = function() {
   } else {
     console.log("Extracted the file IDs: ", []);
     return [];
-  }
-};
-
-/**
- * When a user gets redirect from Google Drive to an app using the Create
- * menu Google Drive will pass the ID of the user in the State parameter
- * which will be a serialized JSON object. This functions extracts and
- * returns the User ID from such state parameter.
- *
- * @return{String} The ID of the user or undefined if it wasn't found.
- */
-dmp.url.stringToObject = function(state) {
-  try {
-    return JSON.parse(state);
-  } catch(e) {
-    return undefined;
   }
 };
 
