@@ -110,9 +110,6 @@ dmp.url.makePrettyUrl = function() {
   if (dmp.folderId) {
     hashParams.push("folderId=" + dmp.folderId);
   }
-  if (dmp.auth.userId) {
-    hashParams.push("userId=" + dmp.auth.userId);
-  }
   var hashParamsString = hashParams.join('&');
   // Make sure we never get an empty Hash to avoid an IE crash on the page.
   if (!hashParamsString || hashParamsString == "") {

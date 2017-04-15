@@ -35,6 +35,17 @@ dmp.folderLabel = undefined;
 /** If test user. */
 dmp.testUser = false;
 
+/** The Drive application ID. */
+dmp.APPLICATION_ID = "543871781652";
+
+/** The app's Client ID. */
+dmp.CLIENT_ID = "543871781652.apps.googleusercontent.com";
+
+/** Some Google OAuth 2.0 scopes. */
+dmp.DRIVE_FILE_SCOPE = "https://www.googleapis.com/auth/drive.file";
+dmp.DRIVE_INSTALL_SCOPE = "https://www.googleapis.com/auth/drive.install";
+dmp.OPENID_SCOPE = "openid";
+
 // Called once Google APIs library has loaded.
 function init() {
   if (dmp.useSandbox) {
@@ -55,7 +66,23 @@ dmp.init = function() {
     return;
   }
   // First make sure we are authorized to access the Drive API.
-  dmp.auth.initAuth(function () {
+  var scope = [
+    dmp.DRIVE_FILE_SCOPE,
+    dmp.DRIVE_INSTALL_SCOPE,
+    dmp.OPENID_SCOPE
+  ].join(' ');
+
+  gapi.auth2.init({
+    client_id: dmp.CLIENT_ID,
+    scope: scope,
+    ux_mode: 'redirect',
+    fetch_basic_profile: false
+  }).then(function(auth) {
+    if (!auth.isSignedIn.get()) {
+      // Will redirect.
+      auth.signIn();
+      return;
+    }
     dmp.drive.aboutGet(function (user, error) {
       if (error) {
         console.log("about error: " + error);
@@ -82,6 +109,14 @@ dmp.init = function() {
     });
   });
 };
+
+dmp.getAccessToken = function() {
+  var auth = gapi.auth2.getAuthInstance();
+  if (!auth) {
+    return null;
+  }
+  return auth.currentUser.get().getAuthResponse(true).access_token;
+}
 
 // Adds plugins to jquery.
 dmp.addJqueryPlugins = function() {
