@@ -50,7 +50,7 @@ dmp.drive.listFiles = function(folderId, callback, retryCounter, items, folders)
         if (resp.error.code == 401
             && resp.error.data[0].reason == "authError"
             && (retryCounter ? retryCounter == 0 : true)) {
-          alert("You have been signed out from your Google Account.");
+          console.log("You have been signed out from your Google Account.");
         // For any other errors we retry once.
         } else if (!retryCounter || retryCounter == 0) {
           dmp.drive.listFiles(folderId, callback, 1, items, folders);
@@ -109,7 +109,7 @@ dmp.drive.getFileUrl = function(fileId, callback, retryCounter) {
         if (resp.error.code == 401
             && resp.error.data[0].reason == "authError"
             && (retryCounter ? retryCounter == 0 : true)) {
-          alert("You have been signed out from your Google Account.");
+          console.log("You have been signed out from your Google Account.");
         // For any other errors we retry once.
         } else if (!retryCounter || retryCounter == 0) {
           dmp.drive.getFileUrl(fileId, callback, 1);
@@ -154,7 +154,7 @@ dmp.drive.aboutGet = function(callback, retryCounter) {
         if (resp.error.code == 401
             && resp.error.data[0].reason == "authError"
             && (retryCounter ? retryCounter == 0 : true)) {
-          alert("You have been signed out from your Google Account.");
+          console.log("You have been signed out from your Google Account.");
         // For any other errors we retry once.
         } else if (!retryCounter || retryCounter == 0) {
           dmp.drive.aboutGet(callback, 1);
