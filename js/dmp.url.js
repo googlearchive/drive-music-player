@@ -19,17 +19,6 @@ var dmp = dmp || {};
 dmp.url = dmp.url || {};
 
 /**
- * Returns the value of the given URL parameter.
- *
- * @return{String} The value of the given URL parameter.
- */
-dmp.url.getUrlParameter = function(name) {
-  var params = location.search;
-  var param = (new RegExp(name + '=' + '(.+?)(&|$)').exec(params)||[,null])[1];
-  return (param ? decodeURIComponent(param) : param);
-};
-
-/**
  * Returns the value of the given Hash parameter.
  *
  * @return{String} The value of the given Hash parameter.
@@ -42,50 +31,19 @@ dmp.url.getHashParameter = function(name) {
 };
 
 /**
- * Extracts the File IDs from the State parameter.
+ * Extracts the File IDs from the fileIds parameter.
  *
  * @return{Array<String>} The File IDs extracted from the state Hash parameter.
  */
 dmp.url.getFileIdsFromStateParam = function() {
-  var stateParamObj = dmp.url.stringToObject(dmp.url.getHashParameter("state"));
-  if (stateParamObj && stateParamObj.ids) {
-    console.log("Extracted the file IDs: ", stateParamObj.ids);
-    return stateParamObj.ids;
+  var fileIds = dmp.url.getHashParameter("fileIds");
+  if (fileIds) {
+    var listFileIds = fileIds.split(',');
+    console.log("Extracted the file IDs: ", listFileIds);
+    return listFileIds;
   } else {
     console.log("Extracted the file IDs: ", []);
     return [];
-  }
-};
-
-/**
- * Extracts the User ID from the State parameter.
- *
- * @return{String} The User ID extracted from the state Hash parameter.
- */
-dmp.url.getUserIdFromStateParam = function() {
-    var stateParamObj = dmp.url.stringToObject(dmp.url.getHashParameter("state"));
-    if (stateParamObj && stateParamObj.userId) {
-        console.log("Extracted the User ID: ", stateParamObj.userId);
-        return stateParamObj.userId;
-    } else {
-        console.log("No user ID found.");
-        return null;
-    }
-};
-
-/**
- * When a user gets redirect from Google Drive to an app using the Create
- * menu Google Drive will pass the ID of the user in the State parameter
- * which will be a serialized JSON object. This functions extracts and
- * returns the User ID from such state parameter.
- *
- * @return{String} The ID of the user or undefined if it wasn't found.
- */
-dmp.url.stringToObject = function(state) {
-  try {
-    return JSON.parse(state);
-  } catch(e) {
-    return undefined;
   }
 };
 
@@ -109,9 +67,6 @@ dmp.url.makePrettyUrl = function() {
   }
   if (dmp.folderId) {
     hashParams.push("folderId=" + dmp.folderId);
-  }
-  if (dmp.auth.userId) {
-    hashParams.push("userId=" + dmp.auth.userId);
   }
   var hashParamsString = hashParams.join('&');
   // Make sure we never get an empty Hash to avoid an IE crash on the page.

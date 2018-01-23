@@ -35,6 +35,17 @@ dmp.folderLabel = undefined;
 /** If test user. */
 dmp.testUser = false;
 
+/** The Drive application ID. */
+dmp.APPLICATION_ID = "543871781652";
+
+/** The app's Client ID. */
+dmp.CLIENT_ID = "543871781652.apps.googleusercontent.com";
+
+/** Some Google OAuth 2.0 scopes. */
+dmp.DRIVE_FILE_SCOPE = "https://www.googleapis.com/auth/drive.file";
+dmp.DRIVE_INSTALL_SCOPE = "https://www.googleapis.com/auth/drive.install";
+dmp.OPENID_SCOPE = "openid";
+
 // Called once Google APIs library has loaded.
 function init() {
   if (dmp.useSandbox) {
@@ -55,33 +66,68 @@ dmp.init = function() {
     return;
   }
   // First make sure we are authorized to access the Drive API.
-  dmp.auth.initAuth(function () {
-    dmp.drive.aboutGet(function (user, error) {
-      if (error) {
-        console.log("about error: " + error);
-        dmp.testUser = false;
-      } else {
-        dmp.testUser = user.emailAddress.indexOf("@google.com") != -1;
-        console.log("isTestUser: " + dmp.testUser);
+  var scope = [
+    dmp.DRIVE_FILE_SCOPE,
+    dmp.DRIVE_INSTALL_SCOPE,
+    dmp.OPENID_SCOPE
+  ].join(' ');
+
+  gapi.auth2.init({
+    client_id: dmp.CLIENT_ID,
+    scope: scope,
+    ux_mode: 'redirect',
+    fetch_basic_profile: false
+  }).then(function(auth) {
+    if (!auth.isSignedIn.get()) {
+      // Will redirect.
+      auth.signIn();
+      return;
+    }
+    dmp.start();
+    // Listen to subsequent events.
+    auth.isSignedIn.listen(function(isSignedIn) {
+      if (!isSignedIn &&
+          confirm('You have been signed out. Do you want to sign in again?')) {
+        auth.signIn();
       }
-      // Extracting all the file IDs to play.
-      var fileIds = dmp.url.getFileIdsFromStateParam();
-      for (var index = 0; index < fileIds.length; index++) {
-        dmp.playlist.audioList.push({id: fileIds[index]});
-      }
-      // Makes a pretty URL from the current playlist.
-      dmp.url.makePrettyUrl();
-      // Hide/show the empty playlist message depending songs are selected.
-      dmp.ui.toggleEmptyPlaylist();
-      // Builds a picker object.
-      dmp.ui.buildPicker();
-      // Create an entry for each songs.
-      dmp.ui.createSongEntries();
-      // Now we can initialize the Player and play some audio files.
-      dmp.player.initPlayer();
-    });
+    })
   });
 };
+
+dmp.start = function() {
+  dmp.drive.aboutGet(function (user, error) {
+    if (error) {
+      console.log("about error: " + error);
+      dmp.testUser = false;
+    } else {
+      dmp.testUser = user.emailAddress.indexOf("@google.com") != -1;
+      console.log("isTestUser: " + dmp.testUser);
+    }
+    // Extracting all the file IDs to play.
+    var fileIds = dmp.url.getFileIdsFromStateParam();
+    for (var index = 0; index < fileIds.length; index++) {
+      dmp.playlist.audioList.push({id: fileIds[index]});
+    }
+    // Makes a pretty URL from the current playlist.
+    dmp.url.makePrettyUrl();
+    // Hide/show the empty playlist message depending songs are selected.
+    dmp.ui.toggleEmptyPlaylist();
+    // Builds a picker object.
+    dmp.ui.buildPicker();
+    // Create an entry for each songs.
+    dmp.ui.createSongEntries();
+    // Now we can initialize the Player and play some audio files.
+    dmp.player.initPlayer();
+  });
+};
+
+dmp.getAccessToken = function() {
+  var auth = gapi.auth2.getAuthInstance();
+  if (!auth) {
+    return null;
+  }
+  return auth.currentUser.get().getAuthResponse(true).access_token;
+}
 
 // Adds plugins to jquery.
 dmp.addJqueryPlugins = function() {

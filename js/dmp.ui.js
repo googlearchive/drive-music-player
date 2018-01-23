@@ -212,7 +212,7 @@ dmp.ui.buildPicker = function() {
   var view4 = new google.picker.DocsView();
   view4.setLabel("📄\u00A0Open\u00A0a\u00A0Playlist");
   view4.setIncludeFolders(false);
-  view4.setMimeTypes(dmp.playlist.PLAYLIST_MIME_TYPE + "." + dmp.auth.APPLICATION_ID);
+  view4.setMimeTypes(dmp.playlist.PLAYLIST_MIME_TYPE + "." + dmp.APPLICATION_ID);
   view4.setMode(google.picker.DocsViewMode.LIST);
 
 
@@ -232,8 +232,8 @@ dmp.ui.buildPicker = function() {
   }
 
   var newPicker = newPickerBuilder.enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
-    .setAppId(dmp.auth.APPLICATION_ID)
-    .setOAuthToken(dmp.auth.accessToken)
+    .setAppId(dmp.APPLICATION_ID)
+    .setOAuthToken(dmp.getAccessToken())
     .setOrigin(window.location.protocol + '//' + window.location.host)
     .addView(view)
     .addView(view2)
@@ -260,7 +260,7 @@ dmp.ui.pickerCallback = function(data) {
       // If the song is not already in the playlist we add it.
       if (data.docs[index].id
           && dmp.playlist.getSongIndex(data.docs[index].id) == -1) {
-        if (data.docs[index].mimeType == dmp.playlist.PLAYLIST_MIME_TYPE + "." + dmp.auth.APPLICATION_ID) {
+        if (data.docs[index].mimeType == dmp.playlist.PLAYLIST_MIME_TYPE + "." + dmp.APPLICATION_ID) {
           dmp.playlist.loadPlaylist({id: data.docs[index].id, filename: data.docs[index].name});
         } else {
           dmp.playlist.audioList.push({id: data.docs[index].id, filename: data.docs[index].name});
