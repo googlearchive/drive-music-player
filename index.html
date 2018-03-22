@@ -181,18 +181,24 @@
           <input id="playlistNameContainer" onchange="dmp.playlist.renamePlaylistFromInput()" title="Change Playlist Name"></input>
           <span class='remove' title='Close Playlist' onclick="dmp.playlist.closePlaylist();">✕</span>
         </div>
-        <table id='fileContainer'>
+        <table class='fileContainer'>
           <thead>
             <tr class="header">
-              <td class="playindicator"></td>
+              <td class="headPlayIndicator"></td>
               <td></td>
               <td class="artist">Artist</td>
               <td class="title">Title</td>
               <td></td>
             </tr>
           </thead>
-          <tbody>
-          </tbody>
+	</table>
+	<div class="tracklist">
+	  <table  class="fileContainer trackCont">
+	    <tbody>
+	    </tbody>
+	  </table>
+	</div>
+	<table class="fileContainer">
           <tfoot>
             <tr id="empty">
               <td colspan="5">
