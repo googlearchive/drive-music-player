@@ -1,5 +1,6 @@
-Music Player for Google Drive
-=============================
+# Music Player Demo for Google Drive
+
+> Note: This is not an official Google Product. This is a sample application demonstrating how to build a fully client side Google Drive application. It is currently deployed and running and is supported on a best effort basis.
 
 Music Player for Google Drive is a simple and lightweight online music player for your audio files stored in Google Drive. Its is entirely client side and does not require any server side component.
 
@@ -20,6 +21,3 @@ As well as the following features:
   * Automatic display of Album covers.
   * Handles users signed-in multiple Google account elegantly.
   * Open Audio files directly from the Google Drive UI.
-
-
-> Note: This is not an official Google Product. This is a sample application demonstrating how to build a fully client side Google Drive application. It is currently deployed and running and is supported on a best effort basis.
