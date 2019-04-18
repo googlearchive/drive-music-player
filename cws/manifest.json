@@ -10,7 +10,7 @@
   },
   "app" : {
     "launch" : {
-      "web_url" : "http://www.driveplayer.com/"
+      "web_url" : "https://www.driveplayer.com/"
     }
   }
 }

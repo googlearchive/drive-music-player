@@ -12,6 +12,7 @@ handlers:
 - url: /
   static_files: index.html
   upload: index.html
+  secure: always
 
 - url: /icon_128\.png
   static_files: cws/icon_128.png
