@@ -119,8 +119,8 @@ dmp.drive.getFileUrl = function(fileId, callback, retryCounter) {
         }
       // We have a good response
       } else if (resp && resp.title) {
-        console.log("Got the File's URL: ", resp.downloadUrl);
-        var authedCallbackUrl = resp.downloadUrl + "&access_token="
+        console.log("Got the File's URL: ", resp.webContentLink);
+        var authedCallbackUrl = resp.webContentLink + "&access_token="
             + encodeURIComponent(dmp.getAccessToken());
         console.log("File's URL w/ auth: ", authedCallbackUrl);
         console.log("File's Data: ", resp);
