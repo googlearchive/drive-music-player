@@ -1,5 +1,5 @@
 <!--
-1. Please search [existing issues](https://github.com/gsuitedevs/drive-music-player/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc).
+1. Please search [existing issues](https://github.com/googleworkspace/drive-music-player/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc).
 2. Please file issues in English.
 -->
 
