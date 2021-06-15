@@ -1,3 +1,7 @@
+# Deprecated
+
+This sample is no longer maintained. No further updates will be made.
+
 # Music Player Demo for Google Drive
 
 > Note: This is not an official Google Product. This is a sample application demonstrating how to build a fully client side Google Drive application. It is currently deployed and running and is supported on a best effort basis.
